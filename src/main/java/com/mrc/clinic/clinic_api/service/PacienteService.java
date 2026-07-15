@@ -4,4 +4,6 @@ import com.mrc.clinic.clinic_api.entity.dto.PacienteDTO;
 
 public interface PacienteService {
     PacienteDTO save(PacienteDTO dto);
+
+    PacienteDTO findById(Long id);
 }
