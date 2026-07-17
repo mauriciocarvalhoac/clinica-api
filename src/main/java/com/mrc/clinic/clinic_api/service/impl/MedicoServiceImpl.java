@@ -44,6 +44,16 @@ public class MedicoServiceImpl implements MedicoService {
                 .orElseThrow(() -> new ObjectNotFoundException("Médico não encontrado."));
     }
 
+    @Override
+    public Long delete(Long id) {
+        Optional<Medico> opt = repository.findById(id);
+        if (opt.isPresent()) {
+            repository.deleteById(id);
+            return id;
+        }
+        throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
+    }
+
     public MedicoDTO to(Medico obj) {
         MedicoDTO dto = new MedicoDTO();
         dto.setId(obj.getId());
