@@ -12,4 +12,6 @@ public interface MedicoService {
     MedicoDTO findById(Long id);
 
     Long delete(Long id);
+
+    MedicoDTO update(Long id, MedicoDTO dto);
 }

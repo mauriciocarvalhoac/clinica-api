@@ -6,6 +6,7 @@ import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingExcept
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.MedicoRepository;
 import com.mrc.clinic.clinic_api.service.MedicoService;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,21 @@ public class MedicoServiceImpl implements MedicoService {
             return id;
         }
         throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
+    }
+
+    @Override
+    public @Nullable MedicoDTO update(Long id, MedicoDTO dto) {
+        Optional<Medico> optMedico = repository.findById(id);
+        if (optMedico.isPresent()) {
+            dto.setId(id);
+            Optional<Medico> optCpf = repository.findByCpf(dto.getCpf());
+            if (optCpf.isPresent() && !id.equals(optCpf.get().getId())) {
+                throw new ObjectExistingException("CPF já existe na base de dados.");
+            }
+            Medico medicoSaved = repository.save(to(dto));
+            return to(medicoSaved);
+        }
+        throw new ObjectNotFoundException("Id " + id + " não encontrado.");
     }
 
     public MedicoDTO to(Medico obj) {
