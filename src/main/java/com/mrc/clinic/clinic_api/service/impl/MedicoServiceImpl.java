@@ -2,6 +2,7 @@ package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Medico;
 import com.mrc.clinic.clinic_api.entity.dto.MedicoDTO;
+import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.MedicoRepository;
 import com.mrc.clinic.clinic_api.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class MedicoServiceImpl implements MedicoService {
     public MedicoDTO findById(Long id) {
         return repository.findById(id)
                 .map(this::to)
-                .orElseThrow(() -> new RuntimeException("Médico não encontrado."));
+                .orElseThrow(() -> new ObjectNotFoundException("Médico não encontrado."));
     }
 
     public MedicoDTO to(Medico obj) {
