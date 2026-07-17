@@ -9,6 +9,7 @@ import com.mrc.clinic.clinic_api.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,8 +21,8 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public MedicoDTO save(MedicoDTO dto) {
-        Optional<Medico> sad = repository.findByCpf(dto.getCpf());
-        if (sad.isEmpty()) {
+        Optional<Medico> opt = repository.findByCpf(dto.getCpf());
+        if (opt.isEmpty()) {
             Medico saved = repository.save(to(dto));
             return to(saved);
         }
@@ -30,7 +31,10 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public List<MedicoDTO> listAll() {
-        return repository.findAll().stream().map(this::to).collect(Collectors.toList());
+        return repository.findAll().stream()
+                .map(this::to)
+                .sorted(Comparator.comparing(MedicoDTO::getNome))
+                .collect(Collectors.toList());
     }
 
     @Override
