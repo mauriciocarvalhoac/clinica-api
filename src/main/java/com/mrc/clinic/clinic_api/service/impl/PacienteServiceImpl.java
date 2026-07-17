@@ -9,23 +9,33 @@ import com.mrc.clinic.clinic_api.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PacienteServiceImpl implements PacienteService {
+
     @Autowired
     private PacienteRepository repository;
 
     @Override
     public PacienteDTO save(PacienteDTO dto) {
-        Optional<Paciente> sad = repository.findByCpf(dto.getCpf());
-        if (sad.isEmpty()) {
+        Optional<Paciente> opt = repository.findByCpf(dto.getCpf());
+        if (opt.isEmpty()) {
             Paciente saved = repository.save(to(dto));
             return to(saved);
         }
         throw new ObjectExistingException("Esse CPF já existe.");
+    }
 
-
+    @Override
+    public List<PacienteDTO> listAll() {
+        return repository.findAll().stream()
+                .map(this::to)
+                .sorted(Comparator.comparing(PacienteDTO::getNome))
+                .collect(Collectors.toList());
     }
 
     @Override
