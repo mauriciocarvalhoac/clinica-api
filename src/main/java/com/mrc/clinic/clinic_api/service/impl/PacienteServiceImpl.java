@@ -2,11 +2,14 @@ package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Paciente;
 import com.mrc.clinic.clinic_api.entity.dto.PacienteDTO;
+import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ConflictException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.PacienteRepository;
 import com.mrc.clinic.clinic_api.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class PacienteServiceImpl implements PacienteService {
@@ -15,8 +18,14 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Override
     public PacienteDTO save(PacienteDTO dto) {
-        Paciente saved = repository.save(to(dto));
-        return to(saved);
+        Optional<Paciente> sad = repository.findByCpf(dto.getCpf());
+        if (sad.isEmpty()) {
+            Paciente saved = repository.save(to(dto));
+            return to(saved);
+        }
+        throw new ConflictException("Esse CPF já existe.");
+
+
     }
 
     @Override
