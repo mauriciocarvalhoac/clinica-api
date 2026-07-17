@@ -2,6 +2,7 @@ package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Paciente;
 import com.mrc.clinic.clinic_api.entity.dto.PacienteDTO;
+import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.PacienteRepository;
 import com.mrc.clinic.clinic_api.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,26 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Override
     public PacienteDTO save(PacienteDTO dto) {
-
-        Paciente saved = repository.save(Paciente.to(dto));
-        return PacienteDTO.to(saved);
+        Paciente saved = repository.save(to(dto));
+        return to(saved);
     }
 
     @Override
     public PacienteDTO findById(Long id) {
         return repository.findById(id)
                 .map(this::to)
-                .orElseThrow(() -> new RuntimeException("Não encontrado"));
+                .orElseThrow(() -> new ObjectNotFoundException("Paciente Não encontrado"));
+    }
+
+    public Paciente to(PacienteDTO dto) {
+        Paciente obj = new Paciente();
+        obj.setId(dto.getId());
+        obj.setNome(dto.getNome());
+        obj.setCpf(dto.getCpf());
+        obj.setEmail(dto.getEmail());
+        obj.setTelefone(dto.getTelefone());
+        obj.setCelular(dto.getCelular());
+        return obj;
     }
 
     public PacienteDTO to(Paciente obj) {
