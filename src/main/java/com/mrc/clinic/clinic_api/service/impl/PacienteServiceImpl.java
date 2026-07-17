@@ -56,6 +56,21 @@ public class PacienteServiceImpl implements PacienteService {
         throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
     }
 
+    @Override
+    public @Nullable PacienteDTO update(Long id, PacienteDTO dto) {
+        Optional<Paciente> optPaciente = repository.findById(id);
+        if (optPaciente.isPresent()) {
+            dto.setId(id);
+            Optional<Paciente> optCpf = repository.findByCpf(dto.getCpf());
+            if (optCpf.isPresent() && dto.getCpf().equals(optCpf.get().getCpf()) && !id.equals(optCpf.get().getId())) {
+                throw new ObjectExistingException("Este cpf já está cadastrado.");
+            }
+            Paciente pacienteSaved = repository.save(to(dto));
+            return to(pacienteSaved);
+        }
+        throw new ObjectNotFoundException("Id " + id + " não pode ser atualizado.");
+    }
+
     public Paciente to(PacienteDTO dto) {
         Paciente obj = new Paciente();
         obj.setId(dto.getId());

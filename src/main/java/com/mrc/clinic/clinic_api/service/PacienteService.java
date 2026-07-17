@@ -13,4 +13,6 @@ public interface PacienteService {
     PacienteDTO findById(Long id);
 
     @Nullable Long delete(Long id);
+
+    @Nullable PacienteDTO update(Long id, PacienteDTO dto);
 }

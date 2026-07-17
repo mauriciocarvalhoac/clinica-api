@@ -34,5 +34,10 @@ public class PacienteController {
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         return ResponseEntity.ok(service.delete(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PacienteDTO> update(@PathVariable Long id, @RequestBody PacienteDTO dto) {
+        return ResponseEntity.ok(service.update(id, dto));
+    }
 }
 
