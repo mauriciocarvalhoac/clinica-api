@@ -2,7 +2,7 @@ package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Paciente;
 import com.mrc.clinic.clinic_api.entity.dto.PacienteDTO;
-import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ConflictException;
+import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.PacienteRepository;
 import com.mrc.clinic.clinic_api.service.PacienteService;
@@ -23,7 +23,7 @@ public class PacienteServiceImpl implements PacienteService {
             Paciente saved = repository.save(to(dto));
             return to(saved);
         }
-        throw new ConflictException("Esse CPF já existe.");
+        throw new ObjectExistingException("Esse CPF já existe.");
 
 
     }
