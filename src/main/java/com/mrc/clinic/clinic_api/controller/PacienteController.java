@@ -29,5 +29,10 @@ public class PacienteController {
     public ResponseEntity<PacienteDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        return ResponseEntity.ok(service.delete(id));
+    }
 }
 

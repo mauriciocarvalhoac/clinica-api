@@ -6,6 +6,7 @@ import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingExcept
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.PacienteRepository;
 import com.mrc.clinic.clinic_api.service.PacienteService;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,17 @@ public class PacienteServiceImpl implements PacienteService {
     public PacienteDTO findById(Long id) {
         return repository.findById(id)
                 .map(this::to)
-                .orElseThrow(() -> new ObjectNotFoundException("Paciente Não encontrado"));
+                .orElseThrow(() -> new ObjectNotFoundException("Paciente Não encontrado."));
+    }
+
+    @Override
+    public @Nullable Long delete(Long id) {
+        Optional<Paciente> opt = repository.findById(id);
+        if (opt.isPresent()) {
+            repository.deleteById(id);
+            return id;
+        }
+        throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
     }
 
     public Paciente to(PacienteDTO dto) {

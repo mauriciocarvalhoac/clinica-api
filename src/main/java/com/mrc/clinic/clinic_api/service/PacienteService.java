@@ -1,6 +1,7 @@
 package com.mrc.clinic.clinic_api.service;
 
 import com.mrc.clinic.clinic_api.entity.dto.PacienteDTO;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface PacienteService {
 
     PacienteDTO findById(Long id);
 
+    @Nullable Long delete(Long id);
 }
