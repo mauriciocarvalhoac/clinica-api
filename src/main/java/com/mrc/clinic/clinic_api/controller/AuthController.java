@@ -22,7 +22,7 @@ public class AuthController {
     @Autowired
     private TokenService service;
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<TokenRec> login(@RequestBody UsuarioDTO dto) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
         Authentication authentication = manager.authenticate(token);

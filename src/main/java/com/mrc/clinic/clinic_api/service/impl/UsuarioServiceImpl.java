@@ -32,7 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     private UsuarioRec toRec(Usuario obj) {
-        return new UsuarioRec(obj.getUsername(), obj.getRole());
+        return new UsuarioRec(obj.getUsername());
     }
 
     private Usuario to(UsuarioDTO dto) {
@@ -40,7 +40,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         obj.setId(dto.getId());
         obj.setUsername(dto.getUsername());
         obj.setPassword(dto.getPassword());
-        obj.setRole(dto.getRole());
         return obj;
 
     }

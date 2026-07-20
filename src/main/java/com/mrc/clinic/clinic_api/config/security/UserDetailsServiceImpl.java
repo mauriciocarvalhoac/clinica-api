@@ -14,11 +14,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UsuarioRepository repository;
 
-    /// Esta classe carrega o usuário do banco de dados (representado aqui por um metodo fictício) e o converte em um objeto que o Spring Security entende.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Toda requisição passa por aqui.");
+        System.out.println("Toda requisição passa por aqui. (UserDetailsServiceImpl)");
         Usuario user = repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username/Password incorretos."));
-        return User.withUsername(user.getUsername()).password(user.getPassword()).build();
+        return User.withUsername(user.getUsername()).username(user.getUsername()).password(user.getPassword()).build();
     }
 }

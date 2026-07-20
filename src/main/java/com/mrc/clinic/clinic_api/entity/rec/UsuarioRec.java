@@ -1,6 +1,4 @@
 package com.mrc.clinic.clinic_api.entity.rec;
 
-public record UsuarioRec(
-        String username,
-        String role) {
+public record UsuarioRec(String username) {
 }
