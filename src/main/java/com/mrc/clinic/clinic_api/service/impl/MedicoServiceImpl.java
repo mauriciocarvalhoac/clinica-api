@@ -8,6 +8,8 @@ import com.mrc.clinic.clinic_api.repository.MedicoRepository;
 import com.mrc.clinic.clinic_api.service.MedicoService;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -68,6 +70,21 @@ public class MedicoServiceImpl implements MedicoService {
             return to(medicoSaved);
         }
         throw new ObjectNotFoundException("Id " + id + " não encontrado.");
+    }
+
+    @Override
+    public List<MedicoDTO> filterBy(String nome, String cpf) {
+        Medico dto = new Medico();
+        dto.setNome(nome);
+        dto.setCpf(cpf);
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAll()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Medico> example = Example.of(dto, matcher);
+
+        return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
     }
 
     public MedicoDTO to(Medico obj) {

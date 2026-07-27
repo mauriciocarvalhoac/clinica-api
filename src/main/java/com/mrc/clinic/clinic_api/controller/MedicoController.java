@@ -2,6 +2,7 @@ package com.mrc.clinic.clinic_api.controller;
 
 import com.mrc.clinic.clinic_api.entity.dto.MedicoDTO;
 import com.mrc.clinic.clinic_api.service.MedicoService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,11 @@ public class MedicoController {
     @GetMapping
     public ResponseEntity<List<MedicoDTO>> listAll() {
         return ResponseEntity.ok(service.listAll());
+    }
+
+    @GetMapping("/filtro")
+    public ResponseEntity<List<MedicoDTO>> filterBy(@PathParam("nome") String nome, @PathParam("cpf") String cpf) {
+        return ResponseEntity.ok(service.filterBy(nome, cpf));
     }
 
     @GetMapping("/{id}")
