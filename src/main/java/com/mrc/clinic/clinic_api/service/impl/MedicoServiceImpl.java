@@ -24,12 +24,12 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public MedicoDTO save(MedicoDTO dto) {
-        Optional<Medico> opt = repository.findByCpf(dto.getCpf());
-        if (opt.isEmpty()) {
-            Medico saved = repository.save(to(dto));
-            return to(saved);
+        Optional<Medico> ooptCpf = repository.findByCpf(dto.getCpf());
+        if (ooptCpf.isPresent()) {
+            throw new ObjectExistingException("Esse CPF já existe.");
         }
-        throw new ObjectExistingException("Esse CPF já existe.");
+        Medico saved = repository.save(to(dto));
+        return to(saved);
     }
 
     @Override

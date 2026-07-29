@@ -30,7 +30,7 @@ public class SecurityConfig {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Define como Stateless
         http.authorizeHttpRequests((auth) -> {
             auth.requestMatchers("/auth/login").permitAll();
-            auth.requestMatchers("/medicos/**").permitAll();
+//            auth.requestMatchers("/medicos/**").permitAll();
             auth.anyRequest().authenticated();
         });
         http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
