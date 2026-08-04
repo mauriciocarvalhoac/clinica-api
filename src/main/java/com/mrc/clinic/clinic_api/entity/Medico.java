@@ -12,11 +12,16 @@ public class Medico {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(length = 255)
     private String nome;
+    @Column(length = 11)
     private String cpf;
 
+    @Column(length = 100)
     private String email;
+    @Column(length = 11)
     private String telefone;
+    @Column(length = 11)
     private String celular;
 
 }
