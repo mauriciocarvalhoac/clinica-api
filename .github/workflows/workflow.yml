@@ -12,11 +12,10 @@ jobs:
       database:
         image: postgres:17-alpine
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/clinic
-          SPRING_DATASOURCE_USERNAME: postgres
-          SPRING_DATASOURCE_PASSWORD: postgres
+          POSTGRES_DB: clinic
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           SPRING_JPA_DEFER-DATASOURCE-INITIALIZATION: "true"
-          LOGGING_LEVEL_ORG_FLYWAYDB: DEBUG
         ports:
           - 5432:5432
         options: >-
