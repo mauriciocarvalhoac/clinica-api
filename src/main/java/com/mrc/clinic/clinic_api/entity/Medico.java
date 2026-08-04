@@ -10,7 +10,7 @@ import lombok.Setter;
 @Table(name = "tb_medico")
 public class Medico {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 255)
     private String nome;
