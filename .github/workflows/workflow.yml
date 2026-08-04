@@ -1,0 +1,25 @@
+name: Pipeline CI/CD
+
+on:
+  push:
+    branches: [ "master", "env/homologacao" ]
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar o JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          cache: 'maven'
+
+      - name: Executar build com Maven
+        run: mvn clean package
+
+      - name: Rodar um comando
+        run: echo "Concluído"
