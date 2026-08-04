@@ -7,6 +7,21 @@ on:
 jobs:
   construir:
     runs-on: ubuntu-latest
+    services:
+      database:
+        image: postgres:14.2-alpine
+        env:
+          POSTGRES_DB: clinic
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
