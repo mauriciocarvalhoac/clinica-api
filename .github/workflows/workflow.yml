@@ -2,14 +2,15 @@ name: Pipeline CI/CD
 
 on:
   push:
-    branches: [ "master", "env/homologacao" ]
+    branches: [ "master", "env/homologacao" , "feature/sprint002/001-configuracao-cloud-native" ]
 
 jobs:
   construir:
     runs-on: ubuntu-latest
+
     services:
       database:
-        image: postgres:14.2-alpine
+        image: postgres:17-alpine
         env:
           POSTGRES_DB: clinic
           POSTGRES_USER: postgres
