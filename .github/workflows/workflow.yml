@@ -12,7 +12,7 @@ jobs:
       database:
         image: postgres:17-alpine
         env:
-          POSTGRES_DB: clinic
+          POSTGRES_DB: clinic-db
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           SPRING_JPA_DEFER-DATASOURCE-INITIALIZATION: "true"
@@ -40,3 +40,26 @@ jobs:
 
       - name: Rodar um comando
         run: echo "Concluído"
+
+      # 3. Configura o Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 4. Faz login no Docker Hub usando os Secrets configurados
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets::DOCKERHUB_USERNAME }}
+          password: ${{ secrets::DOCKERHUB_TOKEN }}
+
+      # 5. Constrói a imagem e faz o Push para o repositório
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: . # Pasta raiz onde está o seu Dockerfile
+          file: ./Dockerfile
+          push: true
+          # Substitua 'seu-usuario' e 'nome-do-repositorio' pelos seus dados reais
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/clinic-api:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/clinic-api:${{ github.sha }}
