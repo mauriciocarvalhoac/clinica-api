@@ -69,9 +69,15 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_PRIVATE_KEY }}
+          #          key: ${{ secrets.VPS_PRIVATE_KEY }}
+          passphrase: ${{ secrets.VPS_PASSPHRASE }}
           script: |
             mkdir app/clinic-app
             cd /app/clinic-app
             git pull origin main
             
+            # 2. Apontar o kubectl para o contexto correto do k3d
+            export KUBECONFIG=$(k3d kubeconfig write mrc)
+            
+            # 3. Executar o Helm Upgrade atualizando a tag da imagem
+            helm upgrade --install clinic-api ./k8s/clinic-api --set image.repository=${{ secrets.DOCKERHUB_USERNAME }}/clinic-api --set image.tag=${{ github.sha }} --wait
