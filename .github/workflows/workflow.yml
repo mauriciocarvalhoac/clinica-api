@@ -71,6 +71,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_PRIVATE_KEY }}
           passphrase: ${{ secrets.VPS_PASSPHRASE }}
+          debug: true # Isso vai mostrar o erro real da conexão no log
           script: |
             mkdir app/clinic-app
             cd /app/clinic-app
