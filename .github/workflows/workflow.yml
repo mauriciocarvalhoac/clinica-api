@@ -65,7 +65,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/clinic-api:${{ github.sha }}
       #  6. Faz o deploy na VPS via SSH (FAZER CONFIGURACAO DAS VARIAVEIS)
       - name: Executar comandos Helm na VPS
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
