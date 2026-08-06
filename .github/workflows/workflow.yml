@@ -69,7 +69,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          #          key: ${{ secrets.VPS_PRIVATE_KEY }}
+          key: ${{ secrets.VPS_PRIVATE_KEY }}
           passphrase: ${{ secrets.VPS_PASSPHRASE }}
           script: |
             mkdir app/clinic-app
