@@ -65,16 +65,16 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/clinic-api:${{ github.sha }}
       #  6. Faz o deploy na VPS via SSH (FAZER CONFIGURACAO DAS VARIAVEIS)
       - name: Executar comandos Helm na VPS
-        uses: appleboy/ssh-action@v1.2.5
+        uses: sshpool/ssh-action@v1.1.2
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_PRIVATE_KEY }}
+          private_key: ${{ secrets.VPS_PRIVATE_KEY }}
           port: ${{ secrets.HOSTINGER_PORT }}
-          command_timeout: 5m # Evita que a tarefa gaste seus minutos do GitHub se o processo travar
+          #          command_timeout: 5m # Evita que a tarefa gaste seus minutos do GitHub se o processo travar
           #          passphrase: ${{ secrets.VPS_PASSPHRASE }}
           #          debug: true # Isso vai mostrar o erro real da conexão no log
-          script: |
+          command: |
             acho. "Conectado com sucesso!"
 #            mkdir app/clinic-app
 #            cd /app/clinic-app
