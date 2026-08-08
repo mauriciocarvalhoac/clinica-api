@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-clinic
+spec:
+  serviceName: "service-db-clinic"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clinic-db-selector
+  template:
+    metadata:
+      labels:
+        app: clinic-db-selector
+    spec:
+      containers:
+        - name: postgres-clinic
+          image: postgres:17-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: "clinic_db"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+          #              valueFrom:
+          #                secretKeyRef:
+          #                  name: secret-clinic
+          #                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: clinic-db
+      volumes:
+        - name: clinic-db
+          persistentVolumeClaim:
+            claimName: clinic-pvc

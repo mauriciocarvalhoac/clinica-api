@@ -1,0 +1,4 @@
+database:
+  url: jdbc:postgresql://service-db-clinic:5432/clinic_db
+  username: postgres
+  password: postgres
