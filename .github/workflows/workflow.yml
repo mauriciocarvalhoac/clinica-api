@@ -61,5 +61,5 @@ jobs:
           push: true
           # Substitua 'seu-usuario' e 'nome-do-repositorio' pelos seus dados reais
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/clinic-api:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/clinic-api:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/clinic-api:1.0.0
+            ${{ secrets.DOCKERHUB_USERNAME }}/clinic-api:1.0.0
