@@ -3,6 +3,6 @@ CREATE TABLE tb_medico (
  nome varchar(255) not null,
  cpf varchar(11) not null,
  email varchar(100),
- telefone varchar(11) not null,
- celular varchar(11)
+ telefone varchar(11),
+ celular varchar(11) not null
 );

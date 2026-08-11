@@ -25,10 +25,6 @@ spec:
               value: "postgres"
             - name: POSTGRES_PASSWORD
               value: "postgres"
-          #              valueFrom:
-          #                secretKeyRef:
-          #                  name: secret-clinic
-          #                  key: POSTGRES_PASSWORD
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: clinic-db

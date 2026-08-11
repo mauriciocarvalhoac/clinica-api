@@ -8,5 +8,5 @@ spec:
   ports:
     - targetPort: 5432
       port: 5432
-      nodePort: 30432
+      nodePort: 30081
   type: NodePort

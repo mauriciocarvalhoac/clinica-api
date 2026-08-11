@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
         - name: clinic-api
-          image: mauriciocarvalhoac/clinic-api:1.0.0
-          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          image: clinic-api:1.0.0
+          imagePullPolicy: IfNotPresent
           env:
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://service-db-clinic:5432/clinic_db"
-            - name: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_HOST
+              value: "service-db-clinic"
+            - name: SPRING_USER
               value: "postgres"
-            - name: SPRING_DATASOURCE_PASSWORD
+            - name: SPRING_PASS
               value: "postgres"

@@ -3,6 +3,7 @@ package com.mrc.clinic.clinic_api.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,6 +31,7 @@ public class SecurityConfig {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Define como Stateless
         http.authorizeHttpRequests((auth) -> {
             auth.requestMatchers("/auth/login").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/usuarios").permitAll();
 //            auth.requestMatchers("/medicos/**").permitAll();
             auth.anyRequest().authenticated();
         });
@@ -60,4 +62,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
         return config.getAuthenticationManager();
     }
+
 }
