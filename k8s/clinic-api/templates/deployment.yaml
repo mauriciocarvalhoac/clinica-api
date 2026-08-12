@@ -16,7 +16,7 @@ spec:
         - name: clinic-api
           ports:
             - containerPort: 8080
-          image: clinic-api:1.0.0
+          image: mauriciocarvalhoac/clinic-api:1.0.0
           imagePullPolicy: IfNotPresent
           env:
             - name: SPRING_HOST
