@@ -9,7 +9,7 @@ spec:
     - host: clinic-app.cloud
       http:
         paths:
-          - path: /
+          - path: /api
             pathType: Prefix
             backend:
               service:

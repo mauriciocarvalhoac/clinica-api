@@ -30,8 +30,8 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable()); // Desabilita CSRF (comum para APIs REST com JWT)
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Define como Stateless
         http.authorizeHttpRequests((auth) -> {
-            auth.requestMatchers("/auth/login").permitAll();
-            auth.requestMatchers(HttpMethod.POST, "/usuarios").permitAll();
+            auth.requestMatchers("/api/auth/login").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll();
 //            auth.requestMatchers("/medicos/**").permitAll();
             auth.anyRequest().authenticated();
         });
