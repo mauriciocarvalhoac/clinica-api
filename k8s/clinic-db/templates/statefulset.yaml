@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: statefulset-clinic
+  name: clinic-db
 spec:
   serviceName: "service-db-clinic"
   replicas: 1
