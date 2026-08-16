@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: clinic-api-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # Adiciona segurança para encaminhamento de cabeçalhos
+    nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-Forwarded-Proto https;
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - clinic-app.cloud
+      secretName: clinic-app-tls
+  rules:
+    - host: clinic-app.cloud
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: service-api-clinic
+                port:
+                  number: 80
+
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: clinic-web-service
+                port:
+                  number: 80

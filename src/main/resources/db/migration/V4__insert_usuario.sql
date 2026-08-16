@@ -1,2 +1,2 @@
-INSERT INTO usuario (username, password) VALUES ('alice.carvalho', '$2a$10$.PZwTcXFE9ZyK9repr4Oo.6FPnRkxvZw1vibj.OUNcjhJL3RQx7fW' );
-INSERT INTO usuario (username, password) VALUES ('mauricio.carvalho', '$2a$10$t8Xcz1nWQNEM6oVrwk/AS.ZqmTepm8RAichxurFwDcIWhlDLj3kYq' );
+INSERT INTO tb_usuario (username, password) VALUES ('alice.carvalho', '$2a$10$.PZwTcXFE9ZyK9repr4Oo.6FPnRkxvZw1vibj.OUNcjhJL3RQx7fW' );
+INSERT INTO tb_usuario (username, password) VALUES ('mauricio.carvalho', '$2a$10$t8Xcz1nWQNEM6oVrwk/AS.ZqmTepm8RAichxurFwDcIWhlDLj3kYq' );
