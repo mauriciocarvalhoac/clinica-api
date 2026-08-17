@@ -3,6 +3,7 @@ package com.mrc.clinic.clinic_api.exceptionConfig;
 import com.mrc.clinic.clinic_api.exceptionConfig.dto.ErrorField;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,4 +31,18 @@ public class HandlerException {
         erro.setStatus(HttpStatus.CONFLICT);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
     }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorField> handlerDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        ErrorField erro = new ErrorField();
+        String message = ex.getRootCause() != null ? ex.getRootCause().getMessage() : "Há um erro de integridade de dados.";
+        if (message.contains("null") || message.contains("not-null")) {
+            message = "Há campos não preenchidos ou preenchidos incorretamente.";
+        }
+        erro.setMessage(message);
+        erro.setTime(LocalDateTime.now());
+        erro.setStatus(HttpStatus.CONFLICT);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
+    }
+
 }
