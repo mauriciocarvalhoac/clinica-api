@@ -21,15 +21,13 @@ public class Medico implements Serializable {
     private String nome;
     @Column(length = 11, nullable = false)
     private String cpf;
+    private String rg;
     @Column(length = 100, nullable = false)
     private String email;
     @Column(length = 15, nullable = false)
     private String celular;
     @Column(length = 15)
     private String telefone;
-
-
-    private String rg;
     private String genero;
     @Temporal
     @Column(name = "data_nascimento")
@@ -37,5 +35,5 @@ public class Medico implements Serializable {
     private LocalDate dataNascimento;
     @Embedded
     private Endereco endereco;
- 
+
 }

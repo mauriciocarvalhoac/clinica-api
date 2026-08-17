@@ -76,9 +76,11 @@ public class PacienteServiceImpl implements PacienteService {
         obj.setId(dto.getId());
         obj.setNome(dto.getNome());
         obj.setCpf(dto.getCpf());
+        obj.setDataNascimento(dto.getDataNascimento());
         obj.setEmail(dto.getEmail());
         obj.setTelefone(dto.getTelefone());
         obj.setCelular(dto.getCelular());
+        obj.setRg(dto.getRg());
         return obj;
     }
 
@@ -90,6 +92,8 @@ public class PacienteServiceImpl implements PacienteService {
         dto.setEmail(obj.getEmail());
         dto.setTelefone(obj.getTelefone());
         dto.setCelular(obj.getCelular());
+        dto.setRg(obj.getRg());
+        dto.setDataNascimento(obj.getDataNascimento());
         return dto;
     }
 

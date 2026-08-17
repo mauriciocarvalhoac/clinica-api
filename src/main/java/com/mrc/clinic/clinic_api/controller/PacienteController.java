@@ -2,6 +2,7 @@ package com.mrc.clinic.clinic_api.controller;
 
 import com.mrc.clinic.clinic_api.entity.dto.PacienteDTO;
 import com.mrc.clinic.clinic_api.service.PacienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class PacienteController {
     private PacienteService service;
 
     @PostMapping
-    public ResponseEntity<PacienteDTO> save(@RequestBody PacienteDTO dto) {
+    public ResponseEntity<PacienteDTO> save(@Valid @RequestBody PacienteDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 

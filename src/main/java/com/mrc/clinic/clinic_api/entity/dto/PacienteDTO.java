@@ -1,17 +1,45 @@
 package com.mrc.clinic.clinic_api.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Embedded;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Temporal;
+
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @Getter
 @Setter
-public class PacienteDTO {
+public class PacienteDTO implements Serializable {
     private Long id;
+    @NotNull(message = "O campo Nome é obrigatório.")
+    @Size(max = 250, message = "O valor maximo do campo Nome é 250 caracteres.")
     private String nome;
+    @NotNull(message = "O campo CPF é obrigatório.")
+    @Size(max = 11, message = "O valor maximo do campo CPF é 11 caracteres.")
     private String cpf;
-
+    @Email(message = "O campo Email está inválido")
+    @Size(max = 100, message = "O valor maximo do campo Email é 100 caracteres.")
+    @NotNull(message = "O campo Email é obrigatório.")
     private String email;
-    private String telefone;
+    @NotNull(message = "O campo Celular é obrigatório.")
+    @Size(max = 15, message = "O valor maximo do campo Celular é 15 caracteres.")
     private String celular;
+    @Size(max = 15, message = "O valor maximo do campo Telefone é 15 caracteres.")
+    private String telefone;
+    @Temporal
+    @NotNull(message = "O campo Data de Nascimento é obrigatório.")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dataNascimento;
+    @Size(max = 15, message = "O valor maximo do campo RG é 15 caracteres.")
+    private String rg;
+    @Size(max = 1, message = "O valor maximo do campo Telefone é 1 caracteres.")
+    private String genero;
+    @Embedded
+    private EnderecoDTO endereco;
 
 }
