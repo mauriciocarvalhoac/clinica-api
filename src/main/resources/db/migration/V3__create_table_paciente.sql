@@ -4,7 +4,7 @@ CREATE TABLE tb_paciente (
     rg varchar(15),
     cpf varchar(11) not null,
     genero varchar(1),
-    data_nascimento date not null,
+    data_nascimento date,
 
     email varchar(100),
     celular varchar(11) not null,
