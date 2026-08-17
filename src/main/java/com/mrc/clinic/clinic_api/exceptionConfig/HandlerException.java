@@ -6,6 +6,8 @@ import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundExcept
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -13,6 +15,37 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class HandlerException {
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorField> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        ErrorField erro = new ErrorField();
+        erro.setMessage(ex.getAllErrors().get(0).getDefaultMessage());
+        erro.setTime(LocalDateTime.now());
+        erro.setStatus(HttpStatus.CONFLICT);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorField> handlerDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        ErrorField erro = new ErrorField();
+        String message = ex.getRootCause() != null ? ex.getRootCause().getMessage() : "Há um erro de integridade de dados.";
+        if (message.contains("null") || message.contains("not-null")) {
+            message = "Há campos não preenchidos ou preenchidos incorretamente.";
+        }
+        erro.setMessage(message);
+        erro.setTime(LocalDateTime.now());
+        erro.setStatus(HttpStatus.CONFLICT);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorField> handlerHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        ErrorField erro = new ErrorField();
+        erro.setMessage(ex.getMessage());
+        erro.setTime(LocalDateTime.now());
+        erro.setStatus(HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<ErrorField> handlerObjectNotFoundException(ObjectNotFoundException ex) {
@@ -27,19 +60,6 @@ public class HandlerException {
     public ResponseEntity<ErrorField> handlerObjectExistingException(ObjectExistingException ex) {
         ErrorField erro = new ErrorField();
         erro.setMessage(ex.getMessage());
-        erro.setTime(LocalDateTime.now());
-        erro.setStatus(HttpStatus.CONFLICT);
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
-    }
-
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErrorField> handlerDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        ErrorField erro = new ErrorField();
-        String message = ex.getRootCause() != null ? ex.getRootCause().getMessage() : "Há um erro de integridade de dados.";
-        if (message.contains("null") || message.contains("not-null")) {
-            message = "Há campos não preenchidos ou preenchidos incorretamente.";
-        }
-        erro.setMessage(message);
         erro.setTime(LocalDateTime.now());
         erro.setStatus(HttpStatus.CONFLICT);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);

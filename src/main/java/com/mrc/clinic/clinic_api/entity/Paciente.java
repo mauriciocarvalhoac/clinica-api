@@ -18,12 +18,12 @@ public class Paciente implements Serializable {
     private String nome;
     @Column(length = 11, nullable = false)
     private String cpf;
-
     @Column(length = 100)
     private String email;
     @Column(length = 11)
     private String telefone;
     @Column(length = 11, nullable = false)
     private String celular;
-
+    @Embedded
+    private Endereco endereco;
 }
