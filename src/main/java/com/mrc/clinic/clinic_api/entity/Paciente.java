@@ -31,7 +31,7 @@ public class Paciente implements Serializable {
     private String celular;
     @Temporal
     @Column(name = "data_nascimento")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
     private String genero;
 
