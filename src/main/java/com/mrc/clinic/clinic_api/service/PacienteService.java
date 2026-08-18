@@ -15,4 +15,6 @@ public interface PacienteService {
     @Nullable Long delete(Long id);
 
     @Nullable PacienteDTO update(Long id, PacienteDTO dto);
+
+    @Nullable List<PacienteDTO> filterBy(String nome, String cpf);
 }

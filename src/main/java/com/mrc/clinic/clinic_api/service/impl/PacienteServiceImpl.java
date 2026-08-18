@@ -8,6 +8,8 @@ import com.mrc.clinic.clinic_api.repository.PacienteRepository;
 import com.mrc.clinic.clinic_api.service.PacienteService;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -69,6 +71,20 @@ public class PacienteServiceImpl implements PacienteService {
             return to(pacienteSaved);
         }
         throw new ObjectNotFoundException("Id " + id + " não pode ser atualizado.");
+    }
+
+    @Override
+    public List<PacienteDTO> filterBy(String nome, String cpf) {
+        Paciente obj = new Paciente();
+        obj.setNome(nome);
+        obj.setCpf(cpf);
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAll()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Paciente> example = Example.of(obj, matcher);
+        return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
     }
 
     public Paciente to(PacienteDTO dto) {

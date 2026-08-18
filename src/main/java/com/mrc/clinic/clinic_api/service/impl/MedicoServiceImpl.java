@@ -74,15 +74,15 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public List<MedicoDTO> filterBy(String nome, String cpf) {
-        Medico dto = new Medico();
-        dto.setNome(nome);
-        dto.setCpf(cpf);
+        Medico obj = new Medico();
+        obj.setNome(nome);
+        obj.setCpf(cpf);
 
         ExampleMatcher matcher = ExampleMatcher
                 .matchingAll()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Medico> example = Example.of(dto, matcher);
+        Example<Medico> example = Example.of(obj, matcher);
 
         return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
     }
