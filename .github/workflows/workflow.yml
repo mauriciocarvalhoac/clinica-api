@@ -2,7 +2,7 @@ name: Pipeline CI/CD
 
 on:
   push:
-    branches: [ "master", "env/homologacao" , "feature/sprint002/001-configuracao-cloud-native" ]
+    branches: [ "master", "develop", "env/homologacao" , "feature/sprint002/001-configuracao-cloud-native" ]
 
 jobs:
   construir:
