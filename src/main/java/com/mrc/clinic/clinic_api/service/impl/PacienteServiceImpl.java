@@ -97,6 +97,7 @@ public class PacienteServiceImpl implements PacienteService {
         obj.setTelefone(dto.getTelefone());
         obj.setCelular(dto.getCelular());
         obj.setRg(dto.getRg());
+        obj.setGenero(dto.getGenero());
         return obj;
     }
 
@@ -110,6 +111,7 @@ public class PacienteServiceImpl implements PacienteService {
         dto.setCelular(obj.getCelular());
         dto.setRg(obj.getRg());
         dto.setDataNascimento(obj.getDataNascimento());
+        dto.setGenero(obj.getGenero());
         return dto;
     }
 
