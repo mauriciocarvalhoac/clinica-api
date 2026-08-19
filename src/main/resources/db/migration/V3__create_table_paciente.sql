@@ -5,11 +5,9 @@ CREATE TABLE tb_paciente (
     cpf varchar(11) not null,
     genero varchar(1),
     data_nascimento date,
-
     email varchar(100),
     celular varchar(11) not null,
     telefone varchar(11),
-
     cep varchar(10),
     logradouro varchar(100),
     numero varchar(10),

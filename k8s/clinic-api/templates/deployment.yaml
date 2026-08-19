@@ -17,7 +17,7 @@ spec:
           ports:
             - containerPort: 8080
           image: mauriciocarvalhoac/clinic-api:1.0.0
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: SPRING_HOST
               value: "service-db-clinic"
