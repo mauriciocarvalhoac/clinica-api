@@ -10,4 +10,6 @@ public interface EspecialidadeService {
     List<EspecialidadeDTO> listAll();
 
     @Nullable EspecialidadeDTO save(EspecialidadeDTO dto);
+
+    @Nullable Long delete(Long id);
 }

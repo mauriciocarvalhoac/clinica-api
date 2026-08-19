@@ -2,6 +2,7 @@ package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Especialidade;
 import com.mrc.clinic.clinic_api.entity.dto.EspecialidadeDTO;
+import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.EspecialidadeRepository;
 import com.mrc.clinic.clinic_api.service.EspecialidadeService;
 import org.jspecify.annotations.Nullable;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +32,16 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
     public @Nullable EspecialidadeDTO save(EspecialidadeDTO dto) {
         Especialidade save = repository.save(to(dto));
         return to(save);
+    }
+
+    @Override
+    public @Nullable Long delete(Long id) {
+        Optional<Especialidade> opt = repository.findById(id);
+        if (opt.isPresent()) {
+            repository.deleteById(id);
+            return id;
+        }
+        throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
     }
 
     private Especialidade to(EspecialidadeDTO dto) {
