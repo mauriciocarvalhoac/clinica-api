@@ -4,9 +4,7 @@ import com.mrc.clinic.clinic_api.entity.dto.EspecialidadeDTO;
 import com.mrc.clinic.clinic_api.service.EspecialidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,10 @@ public class EspecialidadeController {
         return ResponseEntity.ok(service.listAll());
     }
 
+    @PostMapping
+    public ResponseEntity<EspecialidadeDTO> save(@RequestBody EspecialidadeDTO dto) {
+        return ResponseEntity.ok(service.save(dto));
+    }
 //    @GetMapping("/filtro")
 //    public ResponseEntity<List<PacienteDTO>> filterBy(@PathParam("nome") String nome, @PathParam("cpf") String cpf) {
 //        return ResponseEntity.ok(service.filterBy(nome, cpf));
