@@ -16,4 +16,6 @@ public interface EspecialidadeService {
     @Nullable EspecialidadeDTO findById(Long id);
 
     @Nullable EspecialidadeDTO update(Long id, EspecialidadeDTO dto);
+
+    @Nullable List<EspecialidadeDTO> filterBy(String descricao);
 }

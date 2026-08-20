@@ -2,6 +2,7 @@ package com.mrc.clinic.clinic_api.controller;
 
 import com.mrc.clinic.clinic_api.entity.dto.EspecialidadeDTO;
 import com.mrc.clinic.clinic_api.service.EspecialidadeService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +30,10 @@ public class EspecialidadeController {
         return ResponseEntity.ok(service.delete(id));
     }
 
-//    @GetMapping("/filtro")
-//    public ResponseEntity<List<PacienteDTO>> filterBy(@PathParam("nome") String nome, @PathParam("cpf") String cpf) {
-//        return ResponseEntity.ok(service.filterBy(nome, cpf));
-//    }
+    @GetMapping("/filtro")
+    public ResponseEntity<List<EspecialidadeDTO>> filterBy(@PathParam("descricao") String descricao) {
+        return ResponseEntity.ok(service.filterBy(descricao));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<EspecialidadeDTO> findById(@PathVariable Long id) {
