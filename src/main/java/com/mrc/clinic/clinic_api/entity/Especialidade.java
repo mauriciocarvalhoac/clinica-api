@@ -19,5 +19,5 @@ public class Especialidade extends AbstractEntity implements Serializable {
     @Column(length = 20)
     private String cbo;
     @Column(length = 20)
-    private String tuss;
+    private String tiss;
 }
