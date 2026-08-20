@@ -8,6 +8,7 @@ CREATE TABLE tb_medico (
     email varchar(100) not null,
     celular varchar(11) not null,
     telefone varchar(11),
+    pais_origem varchar(3),
     cep varchar(10),
     logradouro varchar(100),
     numero varchar(10),

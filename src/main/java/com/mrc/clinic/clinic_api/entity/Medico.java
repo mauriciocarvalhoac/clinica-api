@@ -21,6 +21,7 @@ public class Medico implements Serializable {
     private String nome;
     @Column(length = 11, nullable = false)
     private String cpf;
+    @Column(length = 15)
     private String rg;
     @Column(length = 100, nullable = false)
     private String email;
@@ -28,7 +29,11 @@ public class Medico implements Serializable {
     private String celular;
     @Column(length = 15)
     private String telefone;
+    @Column(length = 1)
     private String genero;
+    @Column(length = 3)
+    private String paisOrigem;
+
     @Temporal
     @Column(name = "data_nascimento")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")

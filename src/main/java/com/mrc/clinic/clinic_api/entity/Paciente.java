@@ -17,7 +17,7 @@ public class Paciente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 252, nullable = false)
+    @Column(length = 250, nullable = false)
     private String nome;
     @Column(length = 11, nullable = false)
     private String cpf;
@@ -32,7 +32,10 @@ public class Paciente implements Serializable {
     @Temporal
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
+    @Column(length = 1)
     private String genero;
+    @Column(length = 3)
+    private String paisOrigem;
 
     @Embedded
     private Endereco endereco;

@@ -39,6 +39,7 @@ public class MedicoDTO {
     private String rg;
     @Size(max = 1, message = "O valor maximo do campo Telefone é 1 caracteres.")
     private String genero;
+    private String paisOrigem;
     @Embedded
     private EnderecoDTO endereco;
 
