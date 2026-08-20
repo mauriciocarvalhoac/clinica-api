@@ -2,6 +2,7 @@ package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Especialidade;
 import com.mrc.clinic.clinic_api.entity.dto.EspecialidadeDTO;
+import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.EspecialidadeRepository;
 import com.mrc.clinic.clinic_api.service.EspecialidadeService;
@@ -30,8 +31,12 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
 
     @Override
     public @Nullable EspecialidadeDTO save(EspecialidadeDTO dto) {
-        Especialidade save = repository.save(to(dto));
-        return to(save);
+        Optional<Especialidade> opt = repository.findByDescricao(dto.getDescricao());
+        if (opt.isEmpty()) {
+            Especialidade save = repository.save(to(dto));
+            return to(save);
+        }
+        throw new ObjectNotFoundException("Essa especialidade já está cadastrada.");
     }
 
     @Override
@@ -53,11 +58,15 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
     public @Nullable EspecialidadeDTO update(Long id, EspecialidadeDTO dto) {
         Optional<Especialidade> opt = repository.findById(id);
         if (opt.isPresent()) {
+            Optional<Especialidade> descricao = repository.findByDescricao(dto.getDescricao());
+            if (descricao.isPresent() && !id.equals(descricao.get().getId())) {
+                throw new ObjectExistingException("Descrição já existe na base de dados.");
+            }
             dto.setId(id);
             Especialidade save = repository.save(to(dto));
             return to(save);
         }
-        throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
+        throw new ObjectNotFoundException("Id " + id + " não existe.");
     }
 
     private Especialidade to(EspecialidadeDTO dto) {
