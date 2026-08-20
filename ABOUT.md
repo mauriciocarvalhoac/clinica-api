@@ -32,6 +32,8 @@ Para deployar no kubernetes localmente, execute o comando:
 * k3d image import mauriciocarvalhoac/clinic-api:1.0.0 -c clinic-app
 * kubectl rollout restart deployment clinic-api
 
+* kubectl exec -it clinic-db-0 -- psql -U postgres
+
 ## 2. Migrations
 
 ## 3. Github Actions
