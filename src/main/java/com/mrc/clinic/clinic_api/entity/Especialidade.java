@@ -21,5 +21,7 @@ public class Especialidade extends AbstractEntity implements Serializable {
     private String cbo;
     @Column(length = 20)
     private String tiss;
+    @Column(length = 1)
+    private Boolean situacao;
     private LocalDateTime dataCriacao;
 }

@@ -31,7 +31,7 @@ public class Medico implements Serializable {
     private String telefone;
     @Column(length = 1)
     private String genero;
-    @Column(length = 3)
+    @Column(name = "pais_origem", length = 3)
     private String paisOrigem;
 
     @Temporal

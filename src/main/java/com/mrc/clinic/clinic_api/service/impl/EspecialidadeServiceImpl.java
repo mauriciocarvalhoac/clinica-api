@@ -92,6 +92,7 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
         obj.setDescricao(dto.getDescricao());
         obj.setCbo(dto.getCbo());
         obj.setTiss(dto.getTiss());
+        obj.setSituacao(dto.getSituacao());
         return obj;
     }
 
@@ -101,6 +102,7 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
         dto.setDescricao(obj.getDescricao());
         dto.setCbo(obj.getCbo());
         dto.setTiss(obj.getTiss());
+        dto.setSituacao(obj.getSituacao());
         return dto;
     }
 
