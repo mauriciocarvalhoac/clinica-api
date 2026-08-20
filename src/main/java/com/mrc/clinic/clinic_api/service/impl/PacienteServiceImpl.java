@@ -96,6 +96,7 @@ public class PacienteServiceImpl implements PacienteService {
         obj.setEmail(dto.getEmail());
         obj.setTelefone(dto.getTelefone());
         obj.setCelular(dto.getCelular());
+        obj.setPaisOrigem(dto.getPaisOrigem());
         obj.setRg(dto.getRg());
         obj.setGenero(dto.getGenero());
         obj.getEndereco().setCep(dto.getEndereco().getCep());
@@ -115,6 +116,7 @@ public class PacienteServiceImpl implements PacienteService {
         dto.setEmail(obj.getEmail());
         dto.setTelefone(obj.getTelefone());
         dto.setCelular(obj.getCelular());
+        dto.setPaisOrigem(obj.getPaisOrigem());
         dto.setRg(obj.getRg());
         dto.setDataNascimento(obj.getDataNascimento());
         dto.setGenero(obj.getGenero());
