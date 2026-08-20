@@ -28,16 +28,16 @@ public class EspecialidadeController {
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         return ResponseEntity.ok(service.delete(id));
     }
-    
+
 //    @GetMapping("/filtro")
 //    public ResponseEntity<List<PacienteDTO>> filterBy(@PathParam("nome") String nome, @PathParam("cpf") String cpf) {
 //        return ResponseEntity.ok(service.filterBy(nome, cpf));
 //    }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<PacienteDTO> findById(@PathVariable Long id) {
-//        return ResponseEntity.ok(service.findById(id));
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<EspecialidadeDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
 
 //    @PutMapping("/{id}")
 //    public ResponseEntity<PacienteDTO> update(@PathVariable Long id, @RequestBody PacienteDTO dto) {

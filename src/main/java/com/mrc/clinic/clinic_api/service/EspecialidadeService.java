@@ -12,4 +12,6 @@ public interface EspecialidadeService {
     @Nullable EspecialidadeDTO save(EspecialidadeDTO dto);
 
     @Nullable Long delete(Long id);
+
+    @Nullable EspecialidadeDTO findById(Long id);
 }
