@@ -96,6 +96,7 @@ public class MedicoServiceImpl implements MedicoService {
         dto.setTelefone(obj.getTelefone());
         dto.setCelular(obj.getCelular());
         dto.setDataNascimento(obj.getDataNascimento());
+        dto.setPaisOrigem(obj.getPaisOrigem());
         dto.setGenero(obj.getGenero());
         dto.setRg(obj.getRg());
         dto.getEndereco().setCep(obj.getEndereco().getCep());
@@ -116,6 +117,7 @@ public class MedicoServiceImpl implements MedicoService {
         obj.setEmail(dto.getEmail());
         obj.setTelefone(dto.getTelefone());
         obj.setCelular(dto.getCelular());
+        obj.setPaisOrigem(dto.getPaisOrigem());
         obj.setDataNascimento(dto.getDataNascimento());
         obj.setGenero(dto.getGenero());
         obj.setRg(dto.getRg());
