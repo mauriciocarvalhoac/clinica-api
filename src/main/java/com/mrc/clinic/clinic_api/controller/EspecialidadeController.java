@@ -39,10 +39,10 @@ public class EspecialidadeController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<PacienteDTO> update(@PathVariable Long id, @RequestBody PacienteDTO dto) {
-//        return ResponseEntity.ok(service.update(id, dto));
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<EspecialidadeDTO> update(@PathVariable Long id, @RequestBody EspecialidadeDTO dto) {
+        return ResponseEntity.ok(service.update(id, dto));
+    }
 
 }
 

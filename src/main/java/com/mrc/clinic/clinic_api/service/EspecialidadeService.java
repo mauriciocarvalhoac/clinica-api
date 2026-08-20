@@ -14,4 +14,6 @@ public interface EspecialidadeService {
     @Nullable Long delete(Long id);
 
     @Nullable EspecialidadeDTO findById(Long id);
+
+    @Nullable EspecialidadeDTO update(Long id, EspecialidadeDTO dto);
 }

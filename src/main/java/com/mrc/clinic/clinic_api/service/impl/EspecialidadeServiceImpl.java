@@ -49,6 +49,17 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
         return repository.findById(id).map(this::to).orElseThrow(() -> new ObjectNotFoundException("Especialidade não encontrado."));
     }
 
+    @Override
+    public @Nullable EspecialidadeDTO update(Long id, EspecialidadeDTO dto) {
+        Optional<Especialidade> opt = repository.findById(id);
+        if (opt.isPresent()) {
+            dto.setId(id);
+            Especialidade save = repository.save(to(dto));
+            return to(save);
+        }
+        throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
+    }
+
     private Especialidade to(EspecialidadeDTO dto) {
         Especialidade obj = new Especialidade();
         obj.setId(dto.getId());
