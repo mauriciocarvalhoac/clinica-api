@@ -6,8 +6,3 @@ CREATE TABLE tb_especialidade (
     situacao boolean default true,
     data_criacao timestamp default now()
 );
-
-comment on column tb_especialidade.descricao is 'Nome clínico da especialidade';
-comment on column tb_especialidade.cbo is 'Código da Classificação Brasileira de Ocupações (Ministério do Trabalho)';
-comment on column tb_especialidade.tuss is 'Código da Terminologia Unificada da Saúde Suplementar (ANS) para convênios';
-comment on column tb_especialidade.situacao is 'Situação da especialidade.';
