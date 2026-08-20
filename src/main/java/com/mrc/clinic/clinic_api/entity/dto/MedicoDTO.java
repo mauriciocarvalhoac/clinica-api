@@ -1,7 +1,6 @@
 package com.mrc.clinic.clinic_api.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mrc.clinic.clinic_api.entity.Endereco;
 import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -41,7 +40,7 @@ public class MedicoDTO {
     @Size(max = 1, message = "O valor maximo do campo Telefone é 1 caracteres.")
     private String genero;
     @Embedded
-    private Endereco endereco;
+    private EnderecoDTO endereco;
 
 
 }

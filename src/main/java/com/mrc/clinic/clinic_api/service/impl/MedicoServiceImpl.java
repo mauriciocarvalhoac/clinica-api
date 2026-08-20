@@ -1,6 +1,8 @@
 package com.mrc.clinic.clinic_api.service.impl;
 
+import com.mrc.clinic.clinic_api.entity.Endereco;
 import com.mrc.clinic.clinic_api.entity.Medico;
+import com.mrc.clinic.clinic_api.entity.dto.EnderecoDTO;
 import com.mrc.clinic.clinic_api.entity.dto.MedicoDTO;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
@@ -96,9 +98,10 @@ public class MedicoServiceImpl implements MedicoService {
         dto.setTelefone(obj.getTelefone());
         dto.setCelular(obj.getCelular());
         dto.setDataNascimento(obj.getDataNascimento());
-
         dto.setGenero(obj.getGenero());
         dto.setRg(obj.getRg());
+        dto.setEndereco(new EnderecoDTO());
+        dto.getEndereco().setCep(obj.getEndereco().getCep());
 
         return dto;
     }
@@ -112,9 +115,10 @@ public class MedicoServiceImpl implements MedicoService {
         obj.setTelefone(dto.getTelefone());
         obj.setCelular(dto.getCelular());
         obj.setDataNascimento(dto.getDataNascimento());
-
         obj.setGenero(dto.getGenero());
         obj.setRg(dto.getRg());
+        obj.setEndereco(new Endereco());
+        obj.getEndereco().setCep(dto.getEndereco().getCep());
         return obj;
     }
 }
