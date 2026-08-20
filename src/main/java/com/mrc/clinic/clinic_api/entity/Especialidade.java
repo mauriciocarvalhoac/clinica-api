@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,4 +21,5 @@ public class Especialidade extends AbstractEntity implements Serializable {
     private String cbo;
     @Column(length = 20)
     private String tiss;
+    private LocalDateTime dataCriacao;
 }

@@ -17,6 +17,6 @@ public class EspecialidadeDTO implements Serializable {
     @Size(max = 20, message = "O valor maximo do campo CBO é 20 caracteres.")
     private String cbo;
     @Size(max = 20, message = "O valor maximo do campo TUSS é 20 caracteres.")
-    private String tuss;
+    private String tiss;
 
 }
