@@ -42,4 +42,9 @@ public class PacienteDTO implements Serializable {
     @Embedded
     private EnderecoDTO endereco;
 
+    public EnderecoDTO getEndereco() {
+        if (endereco == null)
+            endereco = new EnderecoDTO();
+        return endereco;
+    }
 }

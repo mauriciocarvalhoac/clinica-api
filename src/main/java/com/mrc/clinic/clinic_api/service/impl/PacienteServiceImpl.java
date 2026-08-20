@@ -98,6 +98,12 @@ public class PacienteServiceImpl implements PacienteService {
         obj.setCelular(dto.getCelular());
         obj.setRg(dto.getRg());
         obj.setGenero(dto.getGenero());
+        obj.getEndereco().setCep(dto.getEndereco().getCep());
+        obj.getEndereco().setLogradouro(dto.getEndereco().getLogradouro());
+        obj.getEndereco().setNumero(dto.getEndereco().getNumero());
+        obj.getEndereco().setBairro(dto.getEndereco().getBairro());
+        obj.getEndereco().setCidade(dto.getEndereco().getCidade());
+        obj.getEndereco().setEstado(dto.getEndereco().getEstado());
         return obj;
     }
 
@@ -112,6 +118,12 @@ public class PacienteServiceImpl implements PacienteService {
         dto.setRg(obj.getRg());
         dto.setDataNascimento(obj.getDataNascimento());
         dto.setGenero(obj.getGenero());
+        dto.getEndereco().setCep(obj.getEndereco().getCep());
+        dto.getEndereco().setLogradouro(obj.getEndereco().getLogradouro());
+        dto.getEndereco().setNumero(obj.getEndereco().getNumero());
+        dto.getEndereco().setBairro(obj.getEndereco().getBairro());
+        dto.getEndereco().setCidade(obj.getEndereco().getCidade());
+        dto.getEndereco().setEstado(obj.getEndereco().getEstado());
         return dto;
     }
 

@@ -36,4 +36,9 @@ public class Medico implements Serializable {
     @Embedded
     private Endereco endereco;
 
+    public Endereco getEndereco() {
+        if (endereco == null)
+            endereco = new Endereco();
+        return endereco;
+    }
 }

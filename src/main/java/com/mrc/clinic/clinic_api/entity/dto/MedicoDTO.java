@@ -42,5 +42,9 @@ public class MedicoDTO {
     @Embedded
     private EnderecoDTO endereco;
 
-
+    public EnderecoDTO getEndereco() {
+        if (endereco == null)
+            endereco = new EnderecoDTO();
+        return endereco;
+    }
 }
