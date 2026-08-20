@@ -102,6 +102,11 @@ public class MedicoServiceImpl implements MedicoService {
         dto.setRg(obj.getRg());
         dto.setEndereco(new EnderecoDTO());
         dto.getEndereco().setCep(obj.getEndereco().getCep());
+        dto.getEndereco().setLogradouro(obj.getEndereco().getLogradouro());
+        dto.getEndereco().setNumero(obj.getEndereco().getNumero());
+        dto.getEndereco().setBairro(obj.getEndereco().getBairro());
+        dto.getEndereco().setCidade(obj.getEndereco().getCidade());
+        dto.getEndereco().setEstado(obj.getEndereco().getEstado());
 
         return dto;
     }
@@ -119,6 +124,12 @@ public class MedicoServiceImpl implements MedicoService {
         obj.setRg(dto.getRg());
         obj.setEndereco(new Endereco());
         obj.getEndereco().setCep(dto.getEndereco().getCep());
+        obj.getEndereco().setLogradouro(dto.getEndereco().getLogradouro());
+        obj.getEndereco().setNumero(dto.getEndereco().getNumero());
+        obj.getEndereco().setBairro(dto.getEndereco().getBairro());
+        obj.getEndereco().setCidade(dto.getEndereco().getCidade());
+        obj.getEndereco().setEstado(dto.getEndereco().getEstado());
+
         return obj;
     }
 }
