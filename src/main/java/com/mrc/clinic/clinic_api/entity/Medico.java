@@ -8,6 +8,8 @@ import org.hibernate.annotations.Temporal;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,12 +40,37 @@ public class Medico implements Serializable {
     @Column(name = "data_nascimento")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
-    @Embedded
-    private Endereco endereco;
 
-    public Endereco getEndereco() {
-        if (endereco == null)
-            endereco = new Endereco();
-        return endereco;
+    @Embedded
+    private Endereco endereco = new Endereco();
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MedicoEspecialidade> medicoEspecialidades = new ArrayList<>();
+
+    public void adicionarEspecialidade(MedicoEspecialidade medicoEspecialidade) {
+        medicoEspecialidade.setMedico(this);
+        medicoEspecialidades.add(medicoEspecialidade);
+    }
+
+    public void removerEspecialidade(MedicoEspecialidade medicoEspecialidade) {
+        medicoEspecialidades.remove(medicoEspecialidade);
+        medicoEspecialidade.setMedico(null);
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (medicoEspecialidades != null) {
+            medicoEspecialidades.forEach(medEspecialidade -> {
+                medEspecialidade.setMedico(this);
+            });
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        if (medicoEspecialidades != null) {
+            medicoEspecialidades.forEach(medEspecialidade -> {
+                medEspecialidade.setMedico(this);
+            });
+        }
     }
 }

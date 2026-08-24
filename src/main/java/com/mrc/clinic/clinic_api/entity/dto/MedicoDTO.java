@@ -10,6 +10,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Temporal;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -41,11 +43,9 @@ public class MedicoDTO {
     private String genero;
     private String paisOrigem;
     @Embedded
-    private EnderecoDTO endereco;
+    private EnderecoDTO endereco = new EnderecoDTO();
 
-    public EnderecoDTO getEndereco() {
-        if (endereco == null)
-            endereco = new EnderecoDTO();
-        return endereco;
-    }
+    private List<MedicoEspecialidadeDTO> medicoEspecialidades = new ArrayList<>();
+
+
 }

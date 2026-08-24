@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,5 +21,7 @@ public class EspecialidadeDTO implements Serializable {
     @Size(max = 20, message = "O valor maximo do campo TUSS é 20 caracteres.")
     private String tiss;
     private Boolean situacao;
+
+    private List<MedicoEspecialidadeDTO> medicoEspecialidades = new ArrayList<>();
 
 }

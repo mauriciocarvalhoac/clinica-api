@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,4 +26,7 @@ public class Especialidade extends AbstractEntity implements Serializable {
     @Column(length = 1)
     private Boolean situacao;
     private LocalDateTime dataCriacao;
+
+    @OneToMany(mappedBy = "especialidade")
+    private List<MedicoEspecialidade> medicoEspecialidades = new ArrayList<>();
 }
