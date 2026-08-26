@@ -17,12 +17,12 @@ CREATE TABLE tb_medico (
     estado varchar(2),
 
     crm varchar(10),
-    crmEstado varchar(2),
-    instituicaoGraduacao varchar(100),
+    crm_estado varchar(2),
+    instituicao_graduacao varchar(100),
     statusPos varchar(2),
-    instituicaoPos varchar(100),
-    statusMestrado varchar(2),
-    instituicaoMestrado varchar(100),
-    statusDoutorado varchar(2),
-    instituicaoDoutorado varchar(100)
+    instituicao_pos varchar(100),
+    status_mestrado varchar(2),
+    instituicao_mestrado varchar(100),
+    status_doutorado varchar(2),
+    instituicao_doutorado varchar(100)
 );
