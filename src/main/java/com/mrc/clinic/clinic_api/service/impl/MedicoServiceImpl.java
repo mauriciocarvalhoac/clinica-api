@@ -124,6 +124,17 @@ public class MedicoServiceImpl implements MedicoService {
         obj.getEndereco().setBairro(dto.getEndereco().getBairro());
         obj.getEndereco().setCidade(dto.getEndereco().getCidade());
         obj.getEndereco().setEstado(dto.getEndereco().getEstado());
+
+        obj.setCrm(dto.getCrm());
+        obj.setCrmEstado(dto.getCrmEstado());
+        obj.setInstituicaoGraduacao(dto.getInstituicaoGraduacao());
+        obj.setStatusPos(dto.getStatusPos());
+        obj.setInstituicaoPos(dto.getInstituicaoPos());
+        obj.setStatusMestrado(dto.getStatusMestrado());
+        obj.setInstituicaoMestrado(dto.getInstituicaoMestrado());
+        obj.setStatusDoutorado(dto.getStatusDoutorado());
+        obj.setInstituicaoDoutorado(dto.getInstituicaoDoutorado());
+
     }
 
     @Override
@@ -136,8 +147,8 @@ public class MedicoServiceImpl implements MedicoService {
                 .matchingAll()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Medico> example = Example.of(obj, matcher);
 
+        Example<Medico> example = Example.of(obj, matcher);
         return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
     }
 
@@ -159,6 +170,16 @@ public class MedicoServiceImpl implements MedicoService {
         dto.getEndereco().setBairro(obj.getEndereco().getBairro());
         dto.getEndereco().setCidade(obj.getEndereco().getCidade());
         dto.getEndereco().setEstado(obj.getEndereco().getEstado());
+
+        dto.setCrm(obj.getCrm());
+        dto.setCrmEstado(obj.getCrmEstado());
+        dto.setInstituicaoGraduacao(obj.getInstituicaoGraduacao());
+        dto.setStatusPos(obj.getStatusPos());
+        dto.setInstituicaoPos(obj.getInstituicaoPos());
+        dto.setStatusMestrado(obj.getStatusMestrado());
+        dto.setInstituicaoMestrado(obj.getInstituicaoMestrado());
+        dto.setStatusDoutorado(obj.getStatusDoutorado());
+        dto.setInstituicaoDoutorado(obj.getInstituicaoDoutorado());
 
         for (MedicoEspecialidade medEsp : obj.getMedicoEspecialidades()) {
             MedicoEspecialidadeDTO medespDTO = new MedicoEspecialidadeDTO();
@@ -196,6 +217,16 @@ public class MedicoServiceImpl implements MedicoService {
         obj.getEndereco().setBairro(dto.getEndereco().getBairro());
         obj.getEndereco().setCidade(dto.getEndereco().getCidade());
         obj.getEndereco().setEstado(dto.getEndereco().getEstado());
+
+        obj.setCrm(dto.getCrm());
+        obj.setCrmEstado(dto.getCrmEstado());
+        obj.setInstituicaoGraduacao(dto.getInstituicaoGraduacao());
+        obj.setStatusPos(dto.getStatusPos());
+        obj.setInstituicaoPos(dto.getInstituicaoPos());
+        obj.setStatusMestrado(dto.getStatusMestrado());
+        obj.setInstituicaoMestrado(dto.getInstituicaoMestrado());
+        obj.setStatusDoutorado(dto.getStatusDoutorado());
+        obj.setInstituicaoDoutorado(dto.getInstituicaoDoutorado());
 
         for (MedicoEspecialidadeDTO medEspDTO : dto.getMedicoEspecialidades()) {
             MedicoEspecialidade medesp = new MedicoEspecialidade();

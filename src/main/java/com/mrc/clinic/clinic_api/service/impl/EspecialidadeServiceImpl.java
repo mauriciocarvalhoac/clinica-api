@@ -72,18 +72,19 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
     }
 
     @Override
-    public @Nullable List<EspecialidadeDTO> filterBy(String descricao) {
+    public List<EspecialidadeDTO> filterBy(String descricao, String situacao) {
         Especialidade obj = new Especialidade();
         obj.setDescricao(descricao);
+        obj.setSituacao((situacao != null && situacao != "null") ? Boolean.valueOf(situacao) : null);
 
         ExampleMatcher matcher = ExampleMatcher
                 .matchingAll()
                 .withIgnoreCase()
+                .withIgnoreNullValues()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 
         Example<Especialidade> example = Example.of(obj, matcher);
-        return repository.findAll(example).stream().map(this::to)
-                .sorted(Comparator.comparing(EspecialidadeDTO::getDescricao)).collect(Collectors.toList());
+        return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
     }
 
     private Especialidade to(EspecialidadeDTO dto) {

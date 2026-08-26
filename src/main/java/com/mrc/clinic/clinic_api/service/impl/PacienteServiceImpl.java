@@ -83,6 +83,7 @@ public class PacienteServiceImpl implements PacienteService {
                 .matchingAll()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
         Example<Paciente> example = Example.of(obj, matcher);
         return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
     }

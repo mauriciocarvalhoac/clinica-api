@@ -14,5 +14,15 @@ CREATE TABLE tb_medico (
     numero varchar(10),
     bairro varchar(100),
     cidade varchar(100),
-    estado varchar(2)
+    estado varchar(2),
+
+    crm varchar(10),
+    crmEstado varchar(2),
+    instituicaoGraduacao varchar(100),
+    statusPos varchar(2),
+    instituicaoPos varchar(100),
+    statusMestrado varchar(2),
+    instituicaoMestrado varchar(100),
+    statusDoutorado varchar(2),
+    instituicaoDoutorado varchar(100)
 );

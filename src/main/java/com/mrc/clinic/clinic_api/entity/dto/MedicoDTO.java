@@ -36,12 +36,23 @@ public class MedicoDTO {
     @NotNull(message = "O campo Data de Nascimento é obrigatório.")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
-
     @Size(max = 15, message = "O valor maximo do campo Telefone é 15 caracteres.")
     private String rg;
     @Size(max = 1, message = "O valor maximo do campo Telefone é 1 caracteres.")
     private String genero;
     private String paisOrigem;
+
+    private String crm;
+    private String crmEstado;
+    private String instituicaoGraduacao;
+    private String statusPos;
+    private String instituicaoPos;
+    private String statusMestrado;
+    private String instituicaoMestrado;
+    private String statusDoutorado;
+    private String instituicaoDoutorado;
+
+
     @Embedded
     private EnderecoDTO endereco = new EnderecoDTO();
 

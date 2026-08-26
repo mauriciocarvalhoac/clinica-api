@@ -31,8 +31,8 @@ public class EspecialidadeController {
     }
 
     @GetMapping("/filtro")
-    public ResponseEntity<List<EspecialidadeDTO>> filterBy(@PathParam("descricao") String descricao) {
-        return ResponseEntity.ok(service.filterBy(descricao));
+    public ResponseEntity<List<EspecialidadeDTO>> filterBy(@PathParam("descricao") String descricao, @PathParam("situacao") String situacao) {
+        return ResponseEntity.ok(service.filterBy(descricao, situacao));
     }
 
     @GetMapping("/{id}")

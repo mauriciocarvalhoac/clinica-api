@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Temporal;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -36,10 +35,19 @@ public class Medico implements Serializable {
     @Column(name = "pais_origem", length = 3)
     private String paisOrigem;
 
-    @Temporal
     @Column(name = "data_nascimento")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
+
+    private String crm;
+    private String crmEstado;
+    private String instituicaoGraduacao;
+    private String statusPos;
+    private String instituicaoPos;
+    private String statusMestrado;
+    private String instituicaoMestrado;
+    private String statusDoutorado;
+    private String instituicaoDoutorado;
 
     @Embedded
     private Endereco endereco = new Endereco();

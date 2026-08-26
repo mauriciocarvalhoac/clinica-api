@@ -8,3 +8,5 @@ CREATE TABLE tb_medico_especialidade (
     constraint fk_medico foreign key (id_medico) references tb_medico(id),
     constraint fk_especialidade foreign key (id_especialidade) references tb_especialidade(id)
 );
+
+CREATE UNIQUE INDEX idx_medico_especialidade_principal  ON tb_medico_especialidade (id_medico) WHERE (principal = true);
