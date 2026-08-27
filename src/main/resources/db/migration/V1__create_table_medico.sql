@@ -19,7 +19,7 @@ CREATE TABLE tb_medico (
     crm varchar(10),
     crm_estado varchar(2),
     instituicao_graduacao varchar(100),
-    statusPos varchar(2),
+    status_pos varchar(2),
     instituicao_pos varchar(100),
     status_mestrado varchar(2),
     instituicao_mestrado varchar(100),
