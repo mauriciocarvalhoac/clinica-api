@@ -13,7 +13,7 @@ public interface FuncionarioService {
 
     FuncionarioDTO update(Long id, FuncionarioDTO dto);
 
-//    Long delete(Long id);
+    Long delete(Long id);
 //
 //
 //    @Nullable List<FuncionarioDTO> filterBy(String nome, String cpf);

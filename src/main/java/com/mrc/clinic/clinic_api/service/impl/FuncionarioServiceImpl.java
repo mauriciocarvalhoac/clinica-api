@@ -63,17 +63,17 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
         return to(obj);
     }
 
-//
-//    @Override
-//    public Long delete(Long id) {
-//        Optional<Funcionario> opt = repository.findById(id);
-//        if (opt.isPresent()) {
-//            repository.deleteById(id);
-//            return id;
-//        }
-//        throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
-//    }
-//
+
+    @Override
+    public Long delete(Long id) {
+        Optional<Funcionario> opt = repository.findById(id);
+        if (opt.isPresent()) {
+            repository.deleteById(id);
+            return id;
+        }
+        throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
+    }
+
 
 //
 //    private void atualizarEspecialidades(FuncionarioDTO dto, Funcionario Funcionario) {

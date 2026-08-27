@@ -35,17 +35,17 @@ public class FuncionarioController {
     public ResponseEntity<FuncionarioDTO> update(@PathVariable Long id, @RequestBody FuncionarioDTO dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        return ResponseEntity.ok(service.delete(id));
+    }
+
 //    @GetMapping("/filtro")
 //    public ResponseEntity<List<FuncionarioDTO>> filterBy(@PathParam("nome") String nome, @PathParam("cpf") String cpf) {
 //        return ResponseEntity.ok(service.filterBy(nome, cpf));
 //    }
 //
 
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Long> delete(@PathVariable Long id) {
-//        return ResponseEntity.ok(service.delete(id));
-//    }
-//
 }
 
