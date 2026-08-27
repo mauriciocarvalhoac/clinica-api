@@ -25,6 +25,10 @@ public class AbstractServiceImpl {
         obj.getEndereco().setCidade(dto.getEndereco().getCidade());
         obj.getEndereco().setEstado(dto.getEndereco().getEstado());
 
+        obj.setFuncao(dto.getFuncao());
+        obj.setMatricula(dto.getMatricula());
+        obj.setDepartamento(dto.getDepartamento());
+
 //        obj.setCrm(dto.getCrm());
 //        obj.setCrmEstado(dto.getCrmEstado());
 //        obj.setInstituicaoGraduacao(dto.getInstituicaoGraduacao());
