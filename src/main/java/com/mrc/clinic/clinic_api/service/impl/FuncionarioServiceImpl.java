@@ -7,6 +7,8 @@ import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundExcept
 import com.mrc.clinic.clinic_api.repository.FuncionarioRepository;
 import com.mrc.clinic.clinic_api.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,7 +76,32 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
         throw new ObjectNotFoundException("Id " + id + " não pode ser excluído.");
     }
 
+    @Override
+    public List<FuncionarioDTO> filterBy(String nome, String cpf) {
+        Funcionario obj = new Funcionario();
+        obj.setNome(nome);
+        obj.setCpf(cpf);
 
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAll()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example<Funcionario> example = Example.of(obj, matcher);
+
+        return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
+    }
+
+    @Override
+    public FuncionarioDTO to(Funcionario obj) {
+        FuncionarioDTO dto = new FuncionarioDTO();
+        dto.setId(obj.getId());
+        dto.setNome(obj.getNome());
+        dto.setCpf(obj.getCpf());
+        dto.setEmail(obj.getEmail());
+        dto.setFuncao(obj.getFuncao());
+        return dto;
+    }
 //
 //    private void atualizarEspecialidades(FuncionarioDTO dto, Funcionario Funcionario) {
 //        Set<Long> idsNoDto = dto.getFuncionarioEspecialidades().stream()
@@ -107,19 +134,6 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
 //    }
 //
 //
-//    @Override
-//    public List<FuncionarioDTO> filterBy(String nome, String cpf) {
-//        Funcionario obj = new Funcionario();
-//        obj.setNome(nome);
-//        obj.setCpf(cpf);
-//
-//        ExampleMatcher matcher = ExampleMatcher
-//                .matchingAll()
-//                .withIgnoreCase()
-//                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-//
-//        Example<Funcionario> example = Example.of(obj, matcher);
-//        return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
-//    }
+
 
 }

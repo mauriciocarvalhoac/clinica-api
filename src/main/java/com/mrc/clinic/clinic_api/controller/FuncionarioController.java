@@ -3,6 +3,7 @@ package com.mrc.clinic.clinic_api.controller;
 import com.mrc.clinic.clinic_api.entity.dto.FuncionarioDTO;
 import com.mrc.clinic.clinic_api.service.FuncionarioService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,11 +42,10 @@ public class FuncionarioController {
         return ResponseEntity.ok(service.delete(id));
     }
 
-//    @GetMapping("/filtro")
-//    public ResponseEntity<List<FuncionarioDTO>> filterBy(@PathParam("nome") String nome, @PathParam("cpf") String cpf) {
-//        return ResponseEntity.ok(service.filterBy(nome, cpf));
-//    }
-//
+    @GetMapping("/filtro")
+    public ResponseEntity<List<FuncionarioDTO>> filterBy(@PathParam("nome") String nome, @PathParam("cpf") String cpf) {
+        return ResponseEntity.ok(service.filterBy(nome, cpf));
+    }
 
 }
 
