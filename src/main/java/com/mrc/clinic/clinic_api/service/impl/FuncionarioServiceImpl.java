@@ -92,17 +92,6 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
         return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
     }
 
-    @Override
-    public FuncionarioDTO to(Funcionario obj) {
-        FuncionarioDTO dto = new FuncionarioDTO();
-        dto.setId(obj.getId());
-        dto.setNome(obj.getNome());
-        dto.setCpf(obj.getCpf());
-        dto.setEmail(obj.getEmail());
-        dto.setFuncao(obj.getFuncao());
-        return dto;
-    }
-//
 //    private void atualizarEspecialidades(FuncionarioDTO dto, Funcionario Funcionario) {
 //        Set<Long> idsNoDto = dto.getFuncionarioEspecialidades().stream()
 //                .map(FuncionarioEspecialidadeDTO::getId)

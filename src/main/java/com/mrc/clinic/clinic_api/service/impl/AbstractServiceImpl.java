@@ -18,16 +18,18 @@ public class AbstractServiceImpl {
         obj.setDataNascimento(dto.getDataNascimento());
         obj.setGenero(dto.getGenero());
         obj.setRg(dto.getRg());
+
+        obj.setFuncao(dto.getFuncao());
+        obj.setMatricula(dto.getMatricula());
+        obj.setDepartamento(dto.getDepartamento());
+
+        obj.setEndereco((obj.getEndereco() != null ? obj.getEndereco() : new Endereco()));
         obj.getEndereco().setCep(dto.getEndereco().getCep());
         obj.getEndereco().setLogradouro(dto.getEndereco().getLogradouro());
         obj.getEndereco().setNumero(dto.getEndereco().getNumero());
         obj.getEndereco().setBairro(dto.getEndereco().getBairro());
         obj.getEndereco().setCidade(dto.getEndereco().getCidade());
         obj.getEndereco().setEstado(dto.getEndereco().getEstado());
-
-        obj.setFuncao(dto.getFuncao());
-        obj.setMatricula(dto.getMatricula());
-        obj.setDepartamento(dto.getDepartamento());
 
 //        obj.setCrm(dto.getCrm());
 //        obj.setCrmEstado(dto.getCrmEstado());
