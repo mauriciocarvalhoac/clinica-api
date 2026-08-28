@@ -31,4 +31,5 @@ public class UsuarioDTO {
     @NotNull(message = "O campo Situação é Obrigatório.")
     private EnumUserSituacao situacao;
 
+    private FuncionarioDTO funcionario;
 }

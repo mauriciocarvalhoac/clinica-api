@@ -3,5 +3,8 @@ CREATE TABLE tb_usuario (
     username varchar(100) not null unique,
     password varchar(250) not null,
     situacao char(1) not null,
-    role varchar(5) not null
+    role varchar(5) not null,
+    funcionario_id bigint unique not null,
+
+    constraint fk_usuario foreign key (funcionario_id) references tb_funcionario(id)
 );

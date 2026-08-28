@@ -31,4 +31,16 @@ public class Usuario implements Serializable {
     @Column(name = "situacao", nullable = false, length = 1)
     private EnumUserSituacao situacao;
 
+    @OneToOne
+    @JoinColumn(name = "funcionario_id", unique = true)
+    private Funcionario funcionario;
+
+    @PrePersist
+    @PreUpdate
+    private void sincronizarRelacionamento() {
+        if (this.funcionario != null) {
+            // Garante que o funcionário saiba que este é o usuário dele
+            this.funcionario.setUsuario(this);
+        }
+    }
 }

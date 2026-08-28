@@ -23,8 +23,6 @@ CREATE TABLE if not exists tb_funcionario (
     matricula varchar(20)
 );
 
-insert into tb_funcionario ("nome", "cpf", "email", "celular", ) values ('MauriciO Carvalho', '03140222521', 'mauriciocarvalhoac@gmail.com', '71988417444');
-
 --    crm varchar(10),
 --    crm_estado varchar(2),
 --    instituicao_graduacao varchar(100),

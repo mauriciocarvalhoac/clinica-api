@@ -18,7 +18,7 @@ public class Funcionario implements Serializable {
     private Long id;
     @Column(length = 250, nullable = false)
     private String nome;
-    @Column(length = 11, nullable = false)
+    @Column(length = 11, nullable = false, unique = true)
     private String cpf;
     @Column(length = 15)
     private String rg;
@@ -48,34 +48,7 @@ public class Funcionario implements Serializable {
     @Embedded
     private Endereco endereco = new Endereco();
 
-//    private String crm;
-//    private String crmEstado;
-//    private String instituicaoGraduacao;
-//    private String statusPos;
-//    private String instituicaoPos;
-//    private String statusMestrado;
-//    private String instituicaoMestrado;
-//    private String statusDoutorado;
-//    private String instituicaoDoutorado;
+    @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL)
+    private Usuario usuario;
 
-//    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<MedicoEspecialidade> medicoEspecialidades = new ArrayList<>();
-
-//    @PrePersist
-//    public void prePersist() {
-//        if (medicoEspecialidades != null) {
-//            medicoEspecialidades.forEach(medEspecialidade -> {
-//                medEspecialidade.setMedico(this);
-//            });
-//        }
-//    }
-
-//    @PreUpdate
-//    public void preUpdate() {
-//        if (medicoEspecialidades != null) {
-//            medicoEspecialidades.forEach(medEspecialidade -> {
-//                medEspecialidade.setMedico(this);
-//            });
-//        }
-//    }
 }
