@@ -40,6 +40,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         obj.setId(dto.getId());
         obj.setUsername(dto.getUsername());
         obj.setPassword(dto.getPassword());
+        obj.setSituacao(dto.getSituacao());
+        obj.setRole(dto.getRole());
         return obj;
 
     }
