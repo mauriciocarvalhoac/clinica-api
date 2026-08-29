@@ -4,6 +4,7 @@ import com.mrc.clinic.clinic_api.entity.Funcionario;
 import com.mrc.clinic.clinic_api.entity.rec.FuncionarioRec;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
 
     List<Funcionario> findByNomeAndCpf(String nome, String cpf);
 
+    @Query("SELECT f FROM Funcionario f LEFT JOIN FETCH f.usuario u WHERE f.id = :id")
+    Optional<Funcionario> findUsuarioByFuncionarioId(@Param("id") Long id);
 }

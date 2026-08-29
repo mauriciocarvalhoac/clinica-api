@@ -20,6 +20,9 @@ public class Usuario implements Serializable {
     @Column(length = 100, nullable = false)
     private String username;
 
+    @Column(length = 100, nullable = true)
+    private String emailCorporativo;
+
     @Column(length = 250, nullable = false)
     private String password;
 
@@ -31,16 +34,14 @@ public class Usuario implements Serializable {
     @Column(name = "situacao", nullable = false, length = 1)
     private EnumUserSituacao situacao;
 
-    @OneToOne
-    @JoinColumn(name = "funcionario_id", unique = true)
+    @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
     private Funcionario funcionario;
 
-    @PrePersist
-    @PreUpdate
-    private void sincronizarRelacionamento() {
-        if (this.funcionario != null) {
-            // Garante que o funcionário saiba que este é o usuário dele
-            this.funcionario.setUsuario(this);
-        }
-    }
+//    @PrePersist
+//    @PreUpdate
+//    private void sincronizarRelacionamento() {
+//        if (this.funcionario != null) {
+//            this.funcionario.setUsuario(this);
+//        }
+//    }
 }

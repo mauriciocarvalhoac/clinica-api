@@ -23,6 +23,9 @@ public class UsuarioDTO {
     @Size(max = 250, message = "O valor maximo do campo Password é 16 caracteres.")
     private String password;
 
+    @Size(max = 100, message = "O valor maximo do campo Password é 16 caracteres.")
+    private String emailCorporativo;
+
     @Enumerated(EnumType.STRING)
     @NotNull(message = "O campo Role é Obrigatório.")
     private EnumUserRoles role;

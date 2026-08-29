@@ -16,4 +16,6 @@ public interface FuncionarioService {
     Long delete(Long id);
 
     List<FuncionarioDTO> filterBy(String nome, String cpf);
+
+    FuncionarioDTO findUsuarioByFuncionarioId(Long id);
 }

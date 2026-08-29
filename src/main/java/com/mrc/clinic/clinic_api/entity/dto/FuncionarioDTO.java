@@ -64,6 +64,7 @@ public class FuncionarioDTO {
 
     @Embedded
     private EnderecoDTO endereco = new EnderecoDTO();
+    private UsuarioDTO usuario;
 
     private List<MedicoEspecialidadeDTO> medicoEspecialidades = new ArrayList<>();
 

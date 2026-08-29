@@ -5,4 +5,6 @@ import com.mrc.clinic.clinic_api.entity.rec.UsuarioRec;
 
 public interface UsuarioService {
     UsuarioRec save(UsuarioDTO dto);
+
+    UsuarioRec update(Long id, UsuarioDTO dto);
 }

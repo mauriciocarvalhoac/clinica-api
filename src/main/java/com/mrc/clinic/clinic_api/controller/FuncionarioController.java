@@ -31,6 +31,11 @@ public class FuncionarioController {
     public ResponseEntity<FuncionarioDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
+  
+    @GetMapping("/{id}/usuario")
+    public ResponseEntity<FuncionarioDTO> findUsuarioByFuncionarioId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findUsuarioByFuncionarioId(id));
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<FuncionarioDTO> update(@PathVariable Long id, @RequestBody FuncionarioDTO dto) {

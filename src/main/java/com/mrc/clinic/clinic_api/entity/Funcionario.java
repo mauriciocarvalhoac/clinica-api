@@ -48,7 +48,8 @@ public class Funcionario implements Serializable {
     @Embedded
     private Endereco endereco = new Endereco();
 
-    @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", unique = true)
     private Usuario usuario;
 
 }

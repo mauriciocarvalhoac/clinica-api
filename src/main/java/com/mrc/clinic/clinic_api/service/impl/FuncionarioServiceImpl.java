@@ -1,7 +1,9 @@
 package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Funcionario;
+import com.mrc.clinic.clinic_api.entity.Usuario;
 import com.mrc.clinic.clinic_api.entity.dto.FuncionarioDTO;
+import com.mrc.clinic.clinic_api.entity.dto.UsuarioDTO;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.FuncionarioRepository;
@@ -90,6 +92,33 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
         Example<Funcionario> example = Example.of(obj, matcher);
 
         return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
+    }
+
+    @Override
+    public FuncionarioDTO findUsuarioByFuncionarioId(Long id) {
+        return repository.findUsuarioByFuncionarioId(id).map(this::funcionarioWithUser)
+                .orElse(new FuncionarioDTO());
+    }
+
+    private FuncionarioDTO funcionarioWithUser(Funcionario obj) {
+        FuncionarioDTO dto = new FuncionarioDTO();
+        dto.setId(obj.getId());
+        dto.setNome(obj.getNome());
+        dto.setCpf(obj.getCpf());
+        dto.setDepartamento(obj.getDepartamento());
+        dto.setFuncao(obj.getFuncao());
+        dto.setMatricula(obj.getMatricula());
+        obj.setUsuario(obj.getUsuario() == null ? new Usuario() : obj.getUsuario());
+
+        UsuarioDTO dtoUser = new UsuarioDTO();
+        dtoUser.setId(obj.getUsuario().getId());
+        dtoUser.setUsername(obj.getUsuario().getUsername());
+        dtoUser.setSituacao(obj.getUsuario().getSituacao());
+        dtoUser.setRole(obj.getUsuario().getRole());
+        dtoUser.setEmailCorporativo(obj.getUsuario().getEmailCorporativo());
+        dto.setUsuario(dtoUser);
+
+        return dto;
     }
 
 //    private void atualizarEspecialidades(FuncionarioDTO dto, Funcionario Funcionario) {

@@ -11,6 +11,7 @@ import com.mrc.clinic.clinic_api.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -25,12 +26,25 @@ public class UsuarioServiceImpl implements UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public UsuarioRec save(UsuarioDTO dto) {
         Optional<Usuario> opt = repository.findByUsername(dto.getUsername());
         if (opt.isEmpty()) {
             Funcionario funcionario = repoFuncionario.getReferenceById(dto.getFuncionario().getId());
-            Usuario saved = repository.save(to(dto, funcionario));
-            return toRec(saved);
+            Usuario usuario = repository.save(to(dto, funcionario));
+            funcionario.setUsuario(usuario);
+            repoFuncionario.save(funcionario);
+            return toRec(usuario);
+        }
+        throw new ObjectExistingException("Esse Usuário já existe.");
+    }
+
+    @Override
+    public UsuarioRec update(Long id, UsuarioDTO dto) {
+        Optional<Usuario> usuario = repository.findById(id);
+        if (usuario.isPresent()) {
+            Usuario callback = repository.save(to(dto, usuario.get().getFuncionario()));
+            return toRec(callback);
         }
         throw new ObjectExistingException("Esse Usuário já existe.");
     }
@@ -44,6 +58,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         obj.setId(dto.getId());
         obj.setUsername(dto.getUsername());
         obj.setPassword(passwordEncoder.encode(dto.getPassword()));
+        obj.setEmailCorporativo(dto.getEmailCorporativo());
         obj.setSituacao(dto.getSituacao());
         obj.setRole(dto.getRole());
         obj.setFuncionario(funcionario);
