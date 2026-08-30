@@ -2,17 +2,22 @@ package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Funcionario;
 import com.mrc.clinic.clinic_api.entity.Usuario;
+import com.mrc.clinic.clinic_api.entity.dto.FuncionarioDTO;
 import com.mrc.clinic.clinic_api.entity.dto.UsuarioDTO;
 import com.mrc.clinic.clinic_api.entity.rec.UsuarioRec;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.repository.FuncionarioRepository;
 import com.mrc.clinic.clinic_api.repository.UsuarioRepository;
 import com.mrc.clinic.clinic_api.service.UsuarioService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,8 +54,35 @@ public class UsuarioServiceImpl implements UsuarioService {
         throw new ObjectExistingException("Esse Usuário já existe.");
     }
 
+    @Override
+    public List<UsuarioDTO> listAll() {
+        return repository.list().stream().map(this::to).toList();
+    }
+
+    @Override
+    public List<UsuarioDTO> filter(String username) {
+        Usuario filter = new Usuario();
+        filter.setUsername(username);
+
+        ExampleMatcher exampleMatcher = ExampleMatcher
+                .matchingAll()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example<Usuario> example = Example.of(filter, exampleMatcher);
+        return repository.findAll(example).stream().map(this::to).toList();
+    }
+
     private UsuarioRec toRec(Usuario obj) {
         return new UsuarioRec(obj.getUsername());
+    }
+
+    private UsuarioDTO to(Usuario obj) {
+        UsuarioDTO dto = new UsuarioDTO();
+        BeanUtils.copyProperties(obj, dto);
+        dto.setFuncionario(new FuncionarioDTO());
+        BeanUtils.copyProperties((obj.getFuncionario() == null) ? new Funcionario() : obj.getFuncionario(), dto.getFuncionario());
+        return dto;
     }
 
     private Usuario to(UsuarioDTO dto, Funcionario funcionario) {
