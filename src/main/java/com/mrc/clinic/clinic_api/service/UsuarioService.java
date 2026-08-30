@@ -13,4 +13,6 @@ public interface UsuarioService {
     List<UsuarioDTO> listAll();
 
     List<UsuarioDTO> filter(String username);
+
+    UsuarioDTO findById(Long id);
 }

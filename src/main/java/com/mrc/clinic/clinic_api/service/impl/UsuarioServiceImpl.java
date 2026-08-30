@@ -6,6 +6,7 @@ import com.mrc.clinic.clinic_api.entity.dto.FuncionarioDTO;
 import com.mrc.clinic.clinic_api.entity.dto.UsuarioDTO;
 import com.mrc.clinic.clinic_api.entity.rec.UsuarioRec;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
+import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.FuncionarioRepository;
 import com.mrc.clinic.clinic_api.repository.UsuarioRepository;
 import com.mrc.clinic.clinic_api.service.UsuarioService;
@@ -73,13 +74,22 @@ public class UsuarioServiceImpl implements UsuarioService {
         return repository.findAll(example).stream().map(this::to).toList();
     }
 
+    @Override
+    public UsuarioDTO findById(Long id) {
+        return repository.findById(id).map(this::to).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado."));
+    }
+
     private UsuarioRec toRec(Usuario obj) {
         return new UsuarioRec(obj.getUsername());
     }
 
     private UsuarioDTO to(Usuario obj) {
         UsuarioDTO dto = new UsuarioDTO();
-        BeanUtils.copyProperties(obj, dto);
+        dto.setId(obj.getId());
+        dto.setUsername(obj.getUsername());
+        dto.setRole(obj.getRole());
+        dto.setEmailCorporativo(obj.getEmailCorporativo());
+        dto.setSituacao(obj.getSituacao());
         dto.setFuncionario(new FuncionarioDTO());
         BeanUtils.copyProperties((obj.getFuncionario() == null) ? new Funcionario() : obj.getFuncionario(), dto.getFuncionario());
         return dto;

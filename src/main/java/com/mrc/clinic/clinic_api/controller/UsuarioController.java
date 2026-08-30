@@ -37,5 +37,10 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioDTO>> filter(@PathParam("username") String username) {
         return ResponseEntity.status(HttpStatus.OK).body(service.filter(username));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
+    }
 }
 
