@@ -7,9 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ConveinoRepository extends JpaRepository<Convenio, Long> {
-    @Query("select new com.mrc.clinic.clinic_api.entity.rec.ConvenioRec(c.id, c.descricao, c.situacao) from Convenio c")
+    @Query("select new com.mrc.clinic.clinic_api.entity.rec.ConvenioRec(c.id, c.nomeFantasia, c.situacao) from Convenio c")
     List<ConvenioRec> listAll();
+
+    Optional<Convenio> findByCnpj(String cnpj);
 }

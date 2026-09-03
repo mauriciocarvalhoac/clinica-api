@@ -1,13 +1,16 @@
 package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Convenio;
+import com.mrc.clinic.clinic_api.entity.Plano;
 import com.mrc.clinic.clinic_api.entity.dto.ConvenioDTO;
+import com.mrc.clinic.clinic_api.entity.dto.PlanoDTO;
 import com.mrc.clinic.clinic_api.entity.enums.EnumSituacao;
 import com.mrc.clinic.clinic_api.entity.rec.ConvenioRec;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.ConveinoRepository;
 import com.mrc.clinic.clinic_api.service.ConvenioService;
+import com.mrc.clinic.clinic_api.util.MsgUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -25,8 +28,12 @@ public class ConvenioServiceImpl implements ConvenioService {
 
     @Override
     public ConvenioDTO save(ConvenioDTO dto) {
-        Convenio response = repository.save(to(dto));
-        return to(response);
+        repository.findByCnpj(dto.getCnpj()).ifPresent((Convenio c) -> {
+            throw new ObjectExistingException(MsgUtil.CNPJ_EXISTENTE);
+        });
+
+        Convenio saved = repository.save(to(dto));
+        return to(saved);
     }
 
     @Override
@@ -60,9 +67,9 @@ public class ConvenioServiceImpl implements ConvenioService {
     }
 
     @Override
-    public List<ConvenioDTO> filterBy(String descricao, String situacao) {
+    public List<ConvenioDTO> filterBy(String nomeFantasia, String situacao) {
         Convenio convenio = new Convenio();
-        convenio.setDescricao(descricao);
+        convenio.setNomeFantasia(nomeFantasia);
         convenio.setSituacao((situacao == null || "null".equals(situacao)) ? null : EnumSituacao.valueOf(situacao));
 
         ExampleMatcher matcher = ExampleMatcher
@@ -81,6 +88,14 @@ public class ConvenioServiceImpl implements ConvenioService {
     private ConvenioDTO to(Convenio response) {
         ConvenioDTO dto = new ConvenioDTO();
         BeanUtils.copyProperties(response, dto);
+
+        List<PlanoDTO> lista = response.getPlanos().stream().map(p -> {
+            PlanoDTO plano = new PlanoDTO();
+            BeanUtils.copyProperties(p, plano);
+            return plano;
+        }).toList();
+
+        dto.setPlanos(lista);
         return dto;
     }
 
@@ -93,6 +108,14 @@ public class ConvenioServiceImpl implements ConvenioService {
     private Convenio to(ConvenioDTO dto) {
         Convenio obj = new Convenio();
         BeanUtils.copyProperties(dto, obj);
+
+        List<Plano> planos = dto.getPlanos().stream().map(p -> {
+            Plano plano = new Plano();
+            BeanUtils.copyProperties(p, plano);
+            return plano;
+        }).toList();
+
+        obj.setPlanos(planos);
         return obj;
     }
 }

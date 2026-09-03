@@ -16,5 +16,5 @@ public interface ConvenioService {
 
     ConvenioDTO update(Long id, ConvenioDTO dto);
 
-    List<ConvenioDTO> filterBy(String descricao, String situacao);
+    List<ConvenioDTO> filterBy(String nomeFantasia, String situacao);
 }

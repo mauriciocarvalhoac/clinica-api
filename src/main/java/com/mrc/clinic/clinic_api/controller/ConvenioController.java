@@ -42,8 +42,8 @@ public class ConvenioController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<ConvenioDTO>> filterBy(@PathParam("descricao") String descricao, @PathParam("situacao") String situacao) {
-        return ResponseEntity.ok(service.filterBy(descricao, situacao));
+    public ResponseEntity<List<ConvenioDTO>> filterBy(@PathParam("nomeFantasia") String nomeFantasia, @PathParam("situacao") String situacao) {
+        return ResponseEntity.ok(service.filterBy(nomeFantasia, situacao));
     }
 
 }

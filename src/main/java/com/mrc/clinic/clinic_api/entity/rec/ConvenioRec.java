@@ -4,7 +4,7 @@ import com.mrc.clinic.clinic_api.entity.enums.EnumSituacao;
 
 public record ConvenioRec(
         Long id,
-        String descricao,
+        String nomeFantasia,
         EnumSituacao situacao
 ) {
 }
