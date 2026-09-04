@@ -60,10 +60,22 @@ public class ConvenioServiceImpl implements ConvenioService {
     @Override
     public ConvenioDTO update(Long id, ConvenioDTO dto) {
         repository.findById(id).ifPresent(c -> {
+
+            c.getPlanos().clear();
+            if (dto.getPlanos() != null) {
+                c.getPlanos().addAll(dto.getPlanos().stream().map(this::to).toList());
+            }
+
             to(dto, c);
             repository.save(c);
         });
         return findById(id);
+    }
+
+    private Plano to(PlanoDTO dto) {
+        Plano obj = new Plano();
+        BeanUtils.copyProperties(dto, obj);
+        return obj;
     }
 
     @Override

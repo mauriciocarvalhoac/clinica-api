@@ -33,7 +33,7 @@ public class Convenio extends AbstractEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private EnumSituacao situacao;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_convenio")
     private List<Plano> planos;
 
