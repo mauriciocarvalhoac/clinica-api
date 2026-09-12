@@ -21,11 +21,11 @@ public class MedicoEspecialidade implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "situacao", nullable = false)
-    private Boolean situacao;
     @Column(name = "principal", nullable = false)
     private Boolean principal;
- 
+    @Column(name = "situacao", nullable = false)
+    private Boolean situacao;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_medico", nullable = false)
     private Medico medico;

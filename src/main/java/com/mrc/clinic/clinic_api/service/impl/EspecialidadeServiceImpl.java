@@ -2,10 +2,10 @@ package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.Especialidade;
 import com.mrc.clinic.clinic_api.entity.dto.EspecialidadeDTO;
-import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.EspecialidadeRepository;
 import com.mrc.clinic.clinic_api.service.EspecialidadeService;
+import com.mrc.clinic.clinic_api.util.MsgUtil;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class EspecialidadeServiceImpl implements EspecialidadeService {
+public class EspecialidadeServiceImpl extends AbstractServiceImpl implements EspecialidadeService {
 
     @Autowired
     private EspecialidadeRepository repository;
@@ -38,7 +38,7 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
             Especialidade save = repository.save(to(dto));
             return to(save);
         }
-        throw new ObjectNotFoundException("Essa especialidade já está cadastrada.");
+        throw new ObjectNotFoundException(MsgUtil.ITEM_EXISTENTE.replace("%s", dto.getDescricao()));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
         if (opt.isPresent()) {
             Optional<Especialidade> descricao = repository.findByDescricao(dto.getDescricao());
             if (descricao.isPresent() && !id.equals(descricao.get().getId())) {
-                throw new ObjectExistingException("Descrição já existe na base de dados.");
+                throw new ObjectNotFoundException(MsgUtil.ITEM_EXISTENTE.replace("%s", dto.getDescricao()));
             }
             dto.setId(id);
             Especialidade save = repository.save(to(dto));
@@ -75,7 +75,7 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
     public List<EspecialidadeDTO> filterBy(String descricao, String situacao) {
         Especialidade obj = new Especialidade();
         obj.setDescricao(descricao);
-        obj.setSituacao((situacao != null && situacao != "null") ? Boolean.valueOf(situacao) : null);
+//        obj.setSituacao((situacao != null && situacao != "null") ? Boolean.valueOf(situacao) : null);
 
         ExampleMatcher matcher = ExampleMatcher
                 .matchingAll()
@@ -87,24 +87,10 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
         return repository.findAll(example).stream().map(this::to).collect(Collectors.toList());
     }
 
-    private Especialidade to(EspecialidadeDTO dto) {
-        Especialidade obj = new Especialidade();
-        obj.setId(dto.getId());
-        obj.setDescricao(dto.getDescricao());
-        obj.setCbo(dto.getCbo());
-        obj.setTiss(dto.getTiss());
-        obj.setSituacao(dto.getSituacao());
-        return obj;
-    }
-
-    private EspecialidadeDTO to(Especialidade obj) {
-        EspecialidadeDTO dto = new EspecialidadeDTO();
-        dto.setId(obj.getId());
-        dto.setDescricao(obj.getDescricao());
-        dto.setCbo(obj.getCbo());
-        dto.setTiss(obj.getTiss());
-        dto.setSituacao(obj.getSituacao());
-        return dto;
+    @Override
+    public List<EspecialidadeDTO> listAllAtivas() {
+        return repository.listAllAtivas().stream()
+                .map(this::to).collect(Collectors.toList());
     }
 
 }

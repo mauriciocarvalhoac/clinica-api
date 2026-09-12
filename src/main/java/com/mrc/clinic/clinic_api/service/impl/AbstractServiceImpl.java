@@ -1,11 +1,22 @@
 package com.mrc.clinic.clinic_api.service.impl;
 
-import com.mrc.clinic.clinic_api.entity.Endereco;
-import com.mrc.clinic.clinic_api.entity.Funcionario;
-import com.mrc.clinic.clinic_api.entity.dto.FuncionarioDTO;
+import com.mrc.clinic.clinic_api.entity.*;
+import com.mrc.clinic.clinic_api.entity.dto.*;
 import com.mrc.clinic.clinic_api.entity.rec.FuncionarioRec;
+import org.springframework.beans.BeanUtils;
 
 public class AbstractServiceImpl {
+    public Especialidade to(EspecialidadeDTO dto) {
+        Especialidade obj = new Especialidade();
+        BeanUtils.copyProperties(dto, obj);
+        return obj;
+    }
+
+    public EspecialidadeDTO to(Especialidade obj) {
+        EspecialidadeDTO dto = new EspecialidadeDTO();
+        BeanUtils.copyProperties(obj, dto);
+        return dto;
+    }
 
     public void to(FuncionarioDTO dto, Funcionario obj) {
         obj.setId(dto.getId());
@@ -30,127 +41,99 @@ public class AbstractServiceImpl {
         obj.getEndereco().setBairro(dto.getEndereco().getBairro());
         obj.getEndereco().setCidade(dto.getEndereco().getCidade());
         obj.getEndereco().setEstado(dto.getEndereco().getEstado());
+        obj.setMedico(new Medico());
 
-//        obj.setCrm(dto.getCrm());
-//        obj.setCrmEstado(dto.getCrmEstado());
-//        obj.setInstituicaoGraduacao(dto.getInstituicaoGraduacao());
-//        obj.setStatusPos(dto.getStatusPos());
-//        obj.setInstituicaoPos(dto.getInstituicaoPos());
-//        obj.setStatusMestrado(dto.getStatusMestrado());
-//        obj.setInstituicaoMestrado(dto.getInstituicaoMestrado());
-//        obj.setStatusDoutorado(dto.getStatusDoutorado());
-//        obj.setInstituicaoDoutorado(dto.getInstituicaoDoutorado());
+        if (dto.getMedico() != null) {
+            obj.setMedico(new Medico());
+            obj.getMedico().setCrm(dto.getMedico().getCrm());
+            obj.getMedico().setCrmEstado(dto.getMedico().getCrmEstado());
+            obj.getMedico().setCrmSituacao(dto.getMedico().getCrmSituacao());
+            obj.getMedico().setInstituicaoGraduacao(dto.getMedico().getInstituicaoGraduacao());
+            obj.getMedico().setSituacaoPos(dto.getMedico().getSituacaoPos());
+            obj.getMedico().setInstituicaoPos(dto.getMedico().getInstituicaoPos());
+            obj.getMedico().setSituacaoMestrado(dto.getMedico().getSituacaoMestrado());
+            obj.getMedico().setInstituicaoMestrado(dto.getMedico().getInstituicaoMestrado());
+            obj.getMedico().setSituacaoDoutorado(dto.getMedico().getSituacaoDoutorado());
+            obj.getMedico().setInstituicaoDoutorado(dto.getMedico().getInstituicaoDoutorado());
 
+            for (MedicoEspecialidadeDTO medEspDTO : dto.getMedico().getMedicoEspecialidades()) {
+                MedicoEspecialidade medesp = new MedicoEspecialidade();
+                medesp.setEspecialidade(new Especialidade());
+                medesp.getEspecialidade().setId(medEspDTO.getEspecialidade().getId());
+                medesp.getEspecialidade().setDescricao(medEspDTO.getEspecialidade().getDescricao());
+                medesp.getEspecialidade().setCbo(medEspDTO.getEspecialidade().getCbo());
+                medesp.getEspecialidade().setTiss(medEspDTO.getEspecialidade().getTiss());
+                medesp.getEspecialidade().setRqe(medEspDTO.getEspecialidade().getRqe());
+                medesp.setPrincipal(medEspDTO.getPrincipal());
+                medesp.setSituacao(medEspDTO.getSituacao());
+
+                medesp.setMedico(obj.getMedico());
+                obj.getMedico().getMedicoEspecialidades().add(medesp);
+            }
+        }
     }
 
     public FuncionarioDTO to(FuncionarioRec rec) {
         FuncionarioDTO dto = new FuncionarioDTO();
-        dto.setId(rec.id());
-        dto.setNome(rec.nome());
-        dto.setCpf(rec.cpf());
-        dto.setEmail(rec.email());
-        dto.setFuncao(rec.funcao());
+        BeanUtils.copyProperties(rec, dto);
         return dto;
     }
 
     public FuncionarioDTO to(Funcionario obj) {
         FuncionarioDTO dto = new FuncionarioDTO();
-        dto.setId(obj.getId());
-        dto.setNome(obj.getNome());
-        dto.setCpf(obj.getCpf());
-        dto.setEmail(obj.getEmail());
-        dto.setTelefone(obj.getTelefone());
-        dto.setCelular(obj.getCelular());
-        dto.setDataNascimento(obj.getDataNascimento());
-        dto.setPaisOrigem(obj.getPaisOrigem());
-        dto.setGenero(obj.getGenero());
-        dto.setRg(obj.getRg());
-        obj.setEndereco((obj.getEndereco() != null) ? obj.getEndereco() : new Endereco());
-        dto.getEndereco().setCep(obj.getEndereco().getCep());
-        dto.getEndereco().setLogradouro(obj.getEndereco().getLogradouro());
-        dto.getEndereco().setNumero(obj.getEndereco().getNumero());
-        dto.getEndereco().setBairro(obj.getEndereco().getBairro());
-        dto.getEndereco().setCidade(obj.getEndereco().getCidade());
-        dto.getEndereco().setEstado(obj.getEndereco().getEstado());
+        BeanUtils.copyProperties(obj, dto);
+        if (dto.getEndereco() != null) {
+            EnderecoDTO enderecoDTO = new EnderecoDTO();
+            BeanUtils.copyProperties(obj.getEndereco(), enderecoDTO);
+            dto.setEndereco(enderecoDTO);
+        }
+        if (obj.getMedico() != null) {
 
-        dto.setFuncao(obj.getFuncao());
-        dto.setMatricula(obj.getMatricula());
-        dto.setDepartamento(obj.getDepartamento());
+            MedicoDTO medicoDTO = new MedicoDTO();
+            BeanUtils.copyProperties(obj.getMedico(), medicoDTO);
+            dto.setMedico(medicoDTO);
 
-//        dto.setCrm(obj.getCrm());
-//        dto.setCrmEstado(obj.getCrmEstado());
-//        dto.setInstituicaoGraduacao(obj.getInstituicaoGraduacao());
-//        dto.setStatusPos(obj.getStatusPos());
-//        dto.setInstituicaoPos(obj.getInstituicaoPos());
-//        dto.setStatusMestrado(obj.getStatusMestrado());
-//        dto.setInstituicaoMestrado(obj.getInstituicaoMestrado());
-//        dto.setStatusDoutorado(obj.getStatusDoutorado());
-//        dto.setInstituicaoDoutorado(obj.getInstituicaoDoutorado());
-
-//        for (FuncionarioEspecialidade medEsp : obj.getFuncionarioEspecialidades()) {
-//            FuncionarioEspecialidadeDTO medespDTO = new FuncionarioEspecialidadeDTO();
-//            medespDTO.setEspecialidade(new EspecialidadeDTO());
-//            medespDTO.getEspecialidade().setId(medEsp.getEspecialidade().getId());
-//            medespDTO.getEspecialidade().setDescricao(medEsp.getEspecialidade().getDescricao());
-//            medespDTO.getEspecialidade().setCbo(medEsp.getEspecialidade().getCbo());
-//            medespDTO.getEspecialidade().setTiss(medEsp.getEspecialidade().getTiss());
-//            medespDTO.setPrincipal(medEsp.getPrincipal());
-//            medespDTO.setSituacao(medEsp.getSituacao());
-//            FuncionarioDTO FuncionarioDTO = new FuncionarioDTO();
-//            medespDTO.setId(medEsp.getId());
-//            medespDTO.setFuncionario(FuncionarioDTO);
-//            dto.getFuncionarioEspecialidades().add(medespDTO);
-//        }
+            for (MedicoEspecialidade objMedEsp : obj.getMedico().getMedicoEspecialidades()) {
+                MedicoEspecialidadeDTO dtoMedEspec = new MedicoEspecialidadeDTO();
+                BeanUtils.copyProperties(objMedEsp, dtoMedEspec);
+                if (objMedEsp.getEspecialidade() != null) {
+                    EspecialidadeDTO especialidadeDTO = new EspecialidadeDTO();
+                    BeanUtils.copyProperties(objMedEsp.getEspecialidade(), especialidadeDTO);
+                    dtoMedEspec.setEspecialidade(especialidadeDTO);
+                }
+                dto.getMedico().getMedicoEspecialidades().add(dtoMedEspec);
+            }
+        }
 
         return dto;
     }
 
     public Funcionario to(FuncionarioDTO dto) {
-        Funcionario obj = new Funcionario();
-        obj.setId(dto.getId());
-        obj.setNome(dto.getNome());
-        obj.setCpf(dto.getCpf());
-        obj.setEmail(dto.getEmail());
-        obj.setTelefone(dto.getTelefone());
-        obj.setCelular(dto.getCelular());
-        obj.setPaisOrigem(dto.getPaisOrigem());
-        obj.setDataNascimento(dto.getDataNascimento());
-        obj.setGenero(dto.getGenero());
-        obj.setRg(dto.getRg());
-        obj.getEndereco().setCep(dto.getEndereco().getCep());
-        obj.getEndereco().setLogradouro(dto.getEndereco().getLogradouro());
-        obj.getEndereco().setNumero(dto.getEndereco().getNumero());
-        obj.getEndereco().setBairro(dto.getEndereco().getBairro());
-        obj.getEndereco().setCidade(dto.getEndereco().getCidade());
-        obj.getEndereco().setEstado(dto.getEndereco().getEstado());
+        Funcionario funcionario = new Funcionario();
+        BeanUtils.copyProperties(dto, funcionario);
 
-        obj.setFuncao(dto.getFuncao());
-        obj.setMatricula(dto.getMatricula());
-        obj.setDepartamento(dto.getDepartamento());
+        if (funcionario.getEndereco() != null) {
+            Endereco endereco = new Endereco();
+            BeanUtils.copyProperties(dto.getEndereco(), endereco);
+            funcionario.setEndereco(endereco);
+        }
+        if (dto.getMedico() != null) {
+            Medico medico = new Medico();
+            BeanUtils.copyProperties(dto.getMedico(), medico);
+            funcionario.setMedico(medico);
 
-//        obj.setCrm(dto.getCrm());
-//        obj.setCrmEstado(dto.getCrmEstado());
-//        obj.setInstituicaoGraduacao(dto.getInstituicaoGraduacao());
-//        obj.setStatusPos(dto.getStatusPos());
-//        obj.setInstituicaoPos(dto.getInstituicaoPos());
-//        obj.setStatusMestrado(dto.getStatusMestrado());
-//        obj.setInstituicaoMestrado(dto.getInstituicaoMestrado());
-//        obj.setStatusDoutorado(dto.getStatusDoutorado());
-//        obj.setInstituicaoDoutorado(dto.getInstituicaoDoutorado());
+            for (MedicoEspecialidadeDTO medEspDTO : dto.getMedico().getMedicoEspecialidades()) {
+                MedicoEspecialidade medEspec = new MedicoEspecialidade();
+                BeanUtils.copyProperties(medEspDTO, medEspec);
+                if (medEspDTO.getEspecialidade() != null) {
+                    Especialidade especialidade = new Especialidade();
+                    BeanUtils.copyProperties(medEspDTO.getEspecialidade(), especialidade);
+                    medEspec.setEspecialidade(especialidade);
+                }
+                funcionario.getMedico().getMedicoEspecialidades().add(medEspec);
+            }
+        }
 
-//        for (FuncionarioEspecialidadeDTO medEspDTO : dto.getFuncionarioEspecialidades()) {
-//            FuncionarioEspecialidade medesp = new FuncionarioEspecialidade();
-//            medesp.setEspecialidade(new Especialidade());
-//            medesp.getEspecialidade().setId(medEspDTO.getEspecialidade().getId());
-//            medesp.getEspecialidade().setDescricao(medEspDTO.getEspecialidade().getDescricao());
-//            medesp.getEspecialidade().setCbo(medEspDTO.getEspecialidade().getCbo());
-//            medesp.getEspecialidade().setTiss(medEspDTO.getEspecialidade().getTiss());
-//            medesp.setPrincipal(medEspDTO.getPrincipal());
-//            medesp.setSituacao(medEspDTO.getSituacao());
-//            medesp.setFuncionario(obj);
-//            obj.getFuncionarioEspecialidades().add(medesp);
-//        }
-
-        return obj;
+        return funcionario;
     }
 }

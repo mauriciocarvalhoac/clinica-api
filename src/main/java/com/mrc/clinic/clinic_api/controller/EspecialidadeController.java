@@ -45,5 +45,9 @@ public class EspecialidadeController {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
+    @GetMapping("/ativas")
+    public ResponseEntity<List<EspecialidadeDTO>> listAllAtivas() {
+        return ResponseEntity.ok(service.listAllAtivas());
+    }
 }
 

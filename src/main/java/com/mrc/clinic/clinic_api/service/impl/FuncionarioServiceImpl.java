@@ -45,7 +45,7 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
 
     @Override
     public FuncionarioDTO findById(Long id) {
-        return repository.findById(id)
+        return repository.findMedicoById(id)
                 .map(this::to)
                 .orElseThrow(() -> new ObjectNotFoundException("Médico não encontrado."));
     }
@@ -120,38 +120,6 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
 
         return dto;
     }
-
-//    private void atualizarEspecialidades(FuncionarioDTO dto, Funcionario Funcionario) {
-//        Set<Long> idsNoDto = dto.getFuncionarioEspecialidades().stream()
-//                .map(FuncionarioEspecialidadeDTO::getId)
-//                .filter(Objects::nonNull)
-//                .collect(Collectors.toSet());
-//
-//        Funcionario.getFuncionarioEspecialidades().removeIf(medEsp -> !idsNoDto.contains(medEsp.getId()));
-//
-//        for (FuncionarioEspecialidadeDTO medEspDTO : dto.getFuncionarioEspecialidades()) {
-//            if (medEspDTO.getId() != null) {
-//                Funcionario.getFuncionarioEspecialidades().stream()
-//                        .filter(medEsp -> medEsp.getId().equals(medEspDTO.getId()))
-//                        .findFirst()
-//                        .ifPresent(medEsp -> {
-//                            medEsp.setPrincipal(medEspDTO.getPrincipal());
-//                            medEsp.setSituacao(medEspDTO.getSituacao());
-//                        });
-//            } else {
-//                FuncionarioEspecialidade medesp = new FuncionarioEspecialidade();
-//                medesp.setEspecialidade(new Especialidade());
-//                medesp.getEspecialidade().setId(medEspDTO.getEspecialidade().getId());
-//                medesp.setPrincipal(medEspDTO.getPrincipal());
-//                medesp.setSituacao(medEspDTO.getSituacao());
-//                medesp.setFuncionario(Funcionario);
-//                Funcionario.getFuncionarioEspecialidades().add(medesp);
-//            }
-//        }
-//
-//    }
-//
-//
-
+ 
 
 }

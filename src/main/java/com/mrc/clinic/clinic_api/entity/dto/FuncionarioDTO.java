@@ -13,8 +13,6 @@ import lombok.Setter;
 import org.hibernate.annotations.Temporal;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -52,21 +50,10 @@ public class FuncionarioDTO {
     @Size(max = 20, message = "O valor maximo do campo Matrícula é 20 caracteres.")
     private String matricula;
 
-//    private String crm;
-//    private String crmEstado;
-//    private String instituicaoGraduacao;
-//    private String statusPos;
-//    private String instituicaoPos;
-//    private String statusMestrado;
-//    private String instituicaoMestrado;
-//    private String statusDoutorado;
-//    private String instituicaoDoutorado;
 
     @Embedded
     private EnderecoDTO endereco = new EnderecoDTO();
     private UsuarioDTO usuario;
-
-    private List<MedicoEspecialidadeDTO> medicoEspecialidades = new ArrayList<>();
-
+    private MedicoDTO medico;
 
 }

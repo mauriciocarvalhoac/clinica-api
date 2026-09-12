@@ -18,4 +18,6 @@ public interface EspecialidadeService {
     @Nullable EspecialidadeDTO update(Long id, EspecialidadeDTO dto);
 
     List<EspecialidadeDTO> filterBy(String descricao, String situacao);
+
+    @Nullable List<EspecialidadeDTO> listAllAtivas();
 }

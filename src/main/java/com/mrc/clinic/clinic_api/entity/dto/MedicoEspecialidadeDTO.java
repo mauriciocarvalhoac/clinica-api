@@ -10,8 +10,8 @@ import java.io.Serializable;
 public class MedicoEspecialidadeDTO implements Serializable {
     private Long id;
 
-    private Boolean situacao;
     private Boolean principal;
+    private Boolean situacao;
 
     private MedicoDTO medico;
     private EspecialidadeDTO especialidade;

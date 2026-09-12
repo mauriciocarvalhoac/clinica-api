@@ -1,12 +1,12 @@
 package com.mrc.clinic.clinic_api.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mrc.clinic.clinic_api.entity.enums.EnumSituacao;
+import com.mrc.clinic.clinic_api.entity.enums.EnumSituacaoFormacaoEducacional;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,40 +18,29 @@ public class Medico implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 250, nullable = false)
-    private String nome;
-    @Column(length = 11, nullable = false)
-    private String cpf;
-    @Column(length = 15)
-    private String rg;
-    @Column(length = 100, nullable = false)
-    private String email;
-    @Column(length = 15, nullable = false)
-    private String celular;
-    @Column(length = 15)
-    private String telefone;
-    @Column(length = 1)
-    private String genero;
-    @Column(name = "pais_origem", length = 3)
-    private String paisOrigem;
-
-    @Column(name = "data_nascimento")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private LocalDate dataNascimento;
-
+    @Column(name = "crm", length = 11, nullable = false, unique = true)
     private String crm;
+    @Column(name = "crm_estado", length = 2)
     private String crmEstado;
-    private String instituicaoGraduacao;
-    private String statusPos;
-    private String instituicaoPos;
-    private String statusMestrado;
-    private String instituicaoMestrado;
-    private String statusDoutorado;
-    private String instituicaoDoutorado;
+    @Column(name = "crm_situacao", length = 1)
+    @Enumerated(EnumType.STRING)
+    private EnumSituacao crmSituacao;
 
-    @Embedded
-    private Endereco endereco = new Endereco();
-    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private String instituicaoGraduacao;
+    private String instituicaoPos;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "situacao_pos", length = 1)
+    private EnumSituacaoFormacaoEducacional situacaoPos;
+    private String instituicaoMestrado;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "situacao_mestrado", length = 1)
+    private EnumSituacaoFormacaoEducacional situacaoMestrado;
+    private String instituicaoDoutorado;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "situacao_doutorado", length = 1)
+    private EnumSituacaoFormacaoEducacional situacaoDoutorado;
+
+    @OneToMany(mappedBy = "medico", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MedicoEspecialidade> medicoEspecialidades = new ArrayList<>();
 
     public void adicionarEspecialidade(MedicoEspecialidade medicoEspecialidade) {

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ConvenioServiceImpl implements ConvenioService {
+public class ConvenioServiceImpl extends AbstractServiceImpl implements ConvenioService {
 
     @Autowired
     private ConveinoRepository repository;
