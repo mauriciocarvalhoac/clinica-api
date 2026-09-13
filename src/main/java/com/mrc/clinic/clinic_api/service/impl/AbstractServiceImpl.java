@@ -6,6 +6,7 @@ import com.mrc.clinic.clinic_api.entity.rec.FuncionarioRec;
 import org.springframework.beans.BeanUtils;
 
 public class AbstractServiceImpl {
+
     public Especialidade to(EspecialidadeDTO dto) {
         Especialidade obj = new Especialidade();
         BeanUtils.copyProperties(dto, obj);
@@ -135,5 +136,21 @@ public class AbstractServiceImpl {
         }
 
         return funcionario;
+    }
+
+    public Departamento to(DepartamentoDTO dto) {
+        Departamento obj = new Departamento();
+        BeanUtils.copyProperties(dto, obj);
+        return obj;
+    }
+
+    public DepartamentoDTO to(Departamento obj) {
+        DepartamentoDTO dto = new DepartamentoDTO();
+        BeanUtils.copyProperties(obj, dto);
+        return dto;
+    }
+
+    public void to(DepartamentoDTO dto, Departamento obj) {
+        BeanUtils.copyProperties(dto, obj);
     }
 }
