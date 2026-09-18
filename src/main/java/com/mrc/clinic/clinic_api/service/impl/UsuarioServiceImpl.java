@@ -33,26 +33,35 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioRec save(UsuarioDTO dto) {
-        Optional<Usuario> opt = repository.findByUsername(dto.getUsername());
-        if (opt.isEmpty()) {
-            Funcionario funcionario = repoFuncionario.getReferenceById(dto.getFuncionario().getId());
-            Usuario usuario = repository.save(to(dto, funcionario));
-            funcionario.setUsuario(usuario);
-            repoFuncionario.save(funcionario);
-            return toRec(usuario);
+    public UsuarioRec save(Long idFuncionario, UsuarioDTO dto) {
+        Funcionario funcionario = repoFuncionario.getReferenceById(idFuncionario);
+
+        Optional<Usuario> calbackUsuario = repository.findByEmailCorporativo(dto.getEmailCorporativo());
+        if (calbackUsuario.isPresent()) {
+            throw new ObjectExistingException("Esse email já está vinculado para outro usuário.");
         }
-        throw new ObjectExistingException("Esse Usuário já existe.");
+
+        Usuario usuario = repository.save(to(dto, funcionario));
+        funcionario.setUsuario(usuario);
+        repoFuncionario.save(funcionario);
+        return toRec(usuario);
     }
 
     @Override
-    public UsuarioRec update(Long id, UsuarioDTO dto) {
-        Optional<Usuario> usuario = repository.findById(id);
-        if (usuario.isPresent()) {
-            Usuario callback = repository.save(to(dto, usuario.get().getFuncionario()));
-            return toRec(callback);
+    public UsuarioRec update(Long idFuncionario, UsuarioDTO dto) {
+        Usuario usuario = repository.findById(dto.getId()).orElseThrow(() -> new ObjectNotFoundException("Esse Usuário não existe."));
+
+        Optional<Usuario> calbackUsuario = repository.findByEmailCorporativo(usuario.getEmailCorporativo());
+        if (calbackUsuario.isPresent() && !calbackUsuario.get().getId().equals(usuario.getId())) {
+            throw new ObjectExistingException("Esse email já está vinculado para outro usuário.");
         }
-        throw new ObjectExistingException("Esse Usuário já existe.");
+
+        Funcionario funcionario = repoFuncionario.getReferenceById(idFuncionario);
+        Usuario callback = repository.save(to(dto, funcionario));
+        funcionario.setUsuario(callback);
+        repoFuncionario.save(funcionario);
+        return toRec(callback);
+
     }
 
     @Override

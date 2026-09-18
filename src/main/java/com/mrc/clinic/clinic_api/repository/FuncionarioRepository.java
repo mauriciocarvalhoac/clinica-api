@@ -30,4 +30,5 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
 
     @Query("select f from Funcionario f left join fetch f.medico m left join m.medicoEspecialidades me left join me.especialidade e where f.id = :id")
     Optional<Funcionario> findMedicoById(@Param("id") Long id);
+
 }

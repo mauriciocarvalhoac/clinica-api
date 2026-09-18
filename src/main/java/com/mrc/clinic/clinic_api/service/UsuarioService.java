@@ -6,7 +6,7 @@ import com.mrc.clinic.clinic_api.entity.rec.UsuarioRec;
 import java.util.List;
 
 public interface UsuarioService {
-    UsuarioRec save(UsuarioDTO dto);
+    UsuarioRec save(Long idFuncionario, UsuarioDTO dto);
 
     UsuarioRec update(Long id, UsuarioDTO dto);
 

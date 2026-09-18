@@ -18,9 +18,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService service;
 
-    @PostMapping
-    public ResponseEntity<UsuarioRec> save(@Valid @RequestBody UsuarioDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
+    @PostMapping("/{idFuncionario}")
+    public ResponseEntity<UsuarioRec> save(@PathVariable Long idFuncionario, @Valid @RequestBody UsuarioDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(idFuncionario, dto));
     }
 
     @GetMapping
@@ -28,9 +28,9 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(service.listAll());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UsuarioRec> update(@PathVariable Long id, @Valid @RequestBody UsuarioDTO dto) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
+    @PutMapping("/{idFuncionario}")
+    public ResponseEntity<UsuarioRec> update(@PathVariable Long idFuncionario, @Valid @RequestBody UsuarioDTO dto) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(idFuncionario, dto));
     }
 
     @GetMapping("/filter")

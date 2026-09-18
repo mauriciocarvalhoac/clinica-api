@@ -97,7 +97,7 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
     @Override
     public FuncionarioDTO findUsuarioByFuncionarioId(Long id) {
         return repository.findUsuarioByFuncionarioId(id).map(this::funcionarioWithUser)
-                .orElse(new FuncionarioDTO());
+                .orElseThrow(() -> new ObjectNotFoundException("Esse funcionário não tem um usuário cadastrado."));
     }
 
     private FuncionarioDTO funcionarioWithUser(Funcionario obj) {
@@ -120,6 +120,6 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
 
         return dto;
     }
- 
+
 
 }
