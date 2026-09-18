@@ -15,4 +15,6 @@ public interface UsuarioService {
     List<UsuarioDTO> filter(String username);
 
     UsuarioDTO findById(Long id);
+
+    Long delete(Long id);
 }

@@ -10,6 +10,7 @@ import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundExcept
 import com.mrc.clinic.clinic_api.repository.FuncionarioRepository;
 import com.mrc.clinic.clinic_api.repository.UsuarioRepository;
 import com.mrc.clinic.clinic_api.service.UsuarioService;
+import com.mrc.clinic.clinic_api.util.MsgUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -86,6 +87,23 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioDTO findById(Long id) {
         return repository.findById(id).map(this::to).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado."));
+    }
+
+    @Override
+    @Transactional
+    public Long delete(Long id) {
+        Usuario usuario = repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(MsgUtil.ITEM_NAO_ENCONTRADO));
+        if (usuario != null) {
+            Funcionario funcionario = usuario.getFuncionario();
+            if (funcionario != null) {
+                funcionario.setUsuario(null);
+                repoFuncionario.save(funcionario);
+                repository.deleteById(id);
+            } else {
+                throw new ObjectNotFoundException("Não existe funcionário atrelado a esse usuário;");
+            }
+        }
+        return id;
     }
 
     private UsuarioRec toRec(Usuario obj) {
