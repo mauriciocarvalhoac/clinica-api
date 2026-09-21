@@ -5,7 +5,6 @@ import com.mrc.clinic.clinic_api.entity.Usuario;
 import com.mrc.clinic.clinic_api.entity.dto.FuncionarioDTO;
 import com.mrc.clinic.clinic_api.entity.dto.UsuarioDTO;
 import com.mrc.clinic.clinic_api.entity.rec.UsuarioRec;
-import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.FuncionarioRepository;
 import com.mrc.clinic.clinic_api.repository.UsuarioRepository;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -37,11 +35,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioRec save(Long idFuncionario, UsuarioDTO dto) {
         Funcionario funcionario = repoFuncionario.getReferenceById(idFuncionario);
 
-        Optional<Usuario> calbackUsuario = repository.findByEmailCorporativo(dto.getEmailCorporativo());
-        if (calbackUsuario.isPresent()) {
-            throw new ObjectExistingException("Esse email já está vinculado para outro usuário.");
-        }
-
         Usuario usuario = repository.save(to(dto, funcionario));
         funcionario.setUsuario(usuario);
         repoFuncionario.save(funcionario);
@@ -51,11 +44,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioRec update(Long idFuncionario, UsuarioDTO dto) {
         Usuario usuario = repository.findById(dto.getId()).orElseThrow(() -> new ObjectNotFoundException("Esse Usuário não existe."));
-
-        Optional<Usuario> calbackUsuario = repository.findByEmailCorporativo(usuario.getEmailCorporativo());
-        if (calbackUsuario.isPresent() && !calbackUsuario.get().getId().equals(usuario.getId())) {
-            throw new ObjectExistingException("Esse email já está vinculado para outro usuário.");
-        }
 
         Funcionario funcionario = repoFuncionario.getReferenceById(idFuncionario);
         Usuario callback = repository.save(to(dto, funcionario));
@@ -115,7 +103,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         dto.setId(obj.getId());
         dto.setUsername(obj.getUsername());
         dto.setRole(obj.getRole());
-        dto.setEmailCorporativo(obj.getEmailCorporativo());
         dto.setSituacao(obj.getSituacao());
         dto.setFuncionario(new FuncionarioDTO());
         BeanUtils.copyProperties((obj.getFuncionario() == null) ? new Funcionario() : obj.getFuncionario(), dto.getFuncionario());
@@ -127,7 +114,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         obj.setId(dto.getId());
         obj.setUsername(dto.getUsername());
         obj.setPassword(passwordEncoder.encode(dto.getPassword()));
-        obj.setEmailCorporativo(dto.getEmailCorporativo());
         obj.setSituacao(dto.getSituacao());
         obj.setRole(dto.getRole());
         obj.setFuncionario(funcionario);

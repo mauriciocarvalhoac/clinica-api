@@ -6,7 +6,8 @@ CREATE TABLE tb_funcionario (
     cpf varchar(11) not null,
     genero varchar(1),
     data_nascimento date,
-    email varchar(100) not null,
+    email varchar(100),
+    email_corporativo varchar(100) not null,
     celular varchar(11) not null,
     telefone varchar(11),
     pais_origem varchar(3),
@@ -21,6 +22,7 @@ CREATE TABLE tb_funcionario (
     matricula varchar(20),
     usuario_id bigint,
  	medico_id bigint unique,
+    data_admissao date,
 
     constraint fk_medico_funcionario FOREIGN KEY (medico_id) REFERENCES tb_medico(id)
 );

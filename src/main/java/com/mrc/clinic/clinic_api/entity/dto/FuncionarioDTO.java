@@ -28,6 +28,11 @@ public class FuncionarioDTO {
     @Size(max = 100, message = "O valor maximo do campo Email é 100 caracteres.")
     @NotNull(message = "O campo Email é obrigatório.")
     private String email;
+    @Email(message = "O campo Email está inválido")
+    @Size(max = 100, message = "O valor maximo do campo Email é 100 caracteres.")
+    @NotNull(message = "O campo Email é obrigatório.")
+    private String emailCorporativo;
+
     @NotNull(message = "O campo Celular é obrigatório.")
     @Size(max = 15, message = "O valor maximo do campo Celular é 15 caracteres.")
     private String celular;
@@ -49,7 +54,9 @@ public class FuncionarioDTO {
     private String departamento;
     @Size(max = 20, message = "O valor maximo do campo Matrícula é 20 caracteres.")
     private String matricula;
-
+    @Temporal
+    @NotNull(message = "O campo Data de Admissão é obrigatória.")
+    private LocalDate dataAdmissao;
 
     @Embedded
     private EnderecoDTO endereco = new EnderecoDTO();

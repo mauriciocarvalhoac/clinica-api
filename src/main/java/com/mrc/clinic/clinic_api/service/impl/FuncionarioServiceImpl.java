@@ -45,7 +45,7 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
 
     @Override
     public FuncionarioDTO findById(Long id) {
-        return repository.findMedicoById(id)
+        return repository.findById(id)
                 .map(this::to)
                 .orElseThrow(() -> new ObjectNotFoundException("Médico não encontrado."));
     }
@@ -105,9 +105,12 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
         dto.setId(obj.getId());
         dto.setNome(obj.getNome());
         dto.setCpf(obj.getCpf());
+        dto.setEmailCorporativo(obj.getEmailCorporativo());
         dto.setDepartamento(obj.getDepartamento());
         dto.setFuncao(obj.getFuncao());
         dto.setMatricula(obj.getMatricula());
+        dto.setDataAdmissao(obj.getDataAdmissao());
+
         obj.setUsuario(obj.getUsuario() == null ? new Usuario() : obj.getUsuario());
 
         UsuarioDTO dtoUser = new UsuarioDTO();
@@ -115,7 +118,6 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
         dtoUser.setUsername(obj.getUsuario().getUsername());
         dtoUser.setSituacao(obj.getUsuario().getSituacao());
         dtoUser.setRole(obj.getUsuario().getRole());
-        dtoUser.setEmailCorporativo(obj.getUsuario().getEmailCorporativo());
         dto.setUsuario(dtoUser);
 
         return dto;

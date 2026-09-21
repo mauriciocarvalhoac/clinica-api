@@ -22,8 +22,11 @@ public class Funcionario implements Serializable {
     private String cpf;
     @Column(length = 15)
     private String rg;
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String email;
+    @Column(length = 100, nullable = false)
+    private String emailCorporativo;
+
     @Column(length = 15, nullable = false)
     private String celular;
     @Column(length = 15)
@@ -44,7 +47,8 @@ public class Funcionario implements Serializable {
     @Column(name = "data_nascimento")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
-
+    @Column(name = "data_admissao")
+    private LocalDate dataAdmissao;
     @Embedded
     private Endereco endereco = new Endereco();
 

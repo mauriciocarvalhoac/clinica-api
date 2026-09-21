@@ -17,11 +17,8 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String username;
-
-    @Column(length = 100, nullable = true)
-    private String emailCorporativo;
 
     @Column(length = 250, nullable = false)
     private String password;
@@ -37,11 +34,4 @@ public class Usuario implements Serializable {
     @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
     private Funcionario funcionario;
 
-//    @PrePersist
-//    @PreUpdate
-//    private void sincronizarRelacionamento() {
-//        if (this.funcionario != null) {
-//            this.funcionario.setUsuario(this);
-//        }
-//    }
 }

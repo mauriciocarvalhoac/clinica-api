@@ -83,7 +83,7 @@ public class AbstractServiceImpl {
     public FuncionarioDTO to(Funcionario obj) {
         FuncionarioDTO dto = new FuncionarioDTO();
         BeanUtils.copyProperties(obj, dto);
-        if (dto.getEndereco() != null) {
+        if (obj.getEndereco() != null) {
             EnderecoDTO enderecoDTO = new EnderecoDTO();
             BeanUtils.copyProperties(obj.getEndereco(), enderecoDTO);
             dto.setEndereco(enderecoDTO);

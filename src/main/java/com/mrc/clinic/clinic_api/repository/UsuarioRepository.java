@@ -15,5 +15,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT u FROM Usuario u left join fetch u.funcionario f")
     List<Usuario> list();
 
-    Optional<Usuario> findByEmailCorporativo(String emailCorporativo);
 }
