@@ -1,9 +1,10 @@
 package com.mrc.clinic.clinic_api.service.impl;
 
+import com.mrc.clinic.clinic_api.entity.EnumCargo;
 import com.mrc.clinic.clinic_api.entity.Funcionario;
+import com.mrc.clinic.clinic_api.entity.MedicoEspecialidade;
 import com.mrc.clinic.clinic_api.entity.Usuario;
-import com.mrc.clinic.clinic_api.entity.dto.FuncionarioDTO;
-import com.mrc.clinic.clinic_api.entity.dto.UsuarioDTO;
+import com.mrc.clinic.clinic_api.entity.dto.*;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectExistingException;
 import com.mrc.clinic.clinic_api.exceptionConfig.exceptions.ObjectNotFoundException;
 import com.mrc.clinic.clinic_api.repository.FuncionarioRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +46,41 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
     }
 
     @Override
+    public List<FuncionarioDTO> listMedicos() {
+        return repository.listMedicosAndEspecialidades(EnumCargo.MED).stream().map(this::toListMedicosAndEspecialidades).toList();
+    }
+
+    private FuncionarioDTO toListMedicosAndEspecialidades(Funcionario funcionario) {
+        FuncionarioDTO dto = new FuncionarioDTO();
+        dto.setId(funcionario.getId());
+        dto.setNome(funcionario.getNome());
+
+        if (funcionario.getMedico() != null) {
+            MedicoDTO medicoDTO = new MedicoDTO();
+            medicoDTO.setId(funcionario.getMedico().getId());
+            dto.setMedico(medicoDTO);
+
+            List<MedicoEspecialidadeDTO> mespDTO = new ArrayList<>();
+            for (MedicoEspecialidade mesp : funcionario.getMedico().getMedicoEspecialidades()) {
+                MedicoEspecialidadeDTO mespDTO1 = new MedicoEspecialidadeDTO();
+                mespDTO1.setId(mesp.getId());
+
+                if (mesp.getEspecialidade() != null) {
+                    EspecialidadeDTO especialidadeDTO = new EspecialidadeDTO();
+                    especialidadeDTO.setId(mesp.getEspecialidade().getId());
+                    especialidadeDTO.setDescricao(mesp.getEspecialidade().getDescricao());
+                    mespDTO1.setEspecialidade(especialidadeDTO);
+                }
+
+                mespDTO.add(mespDTO1);
+            }
+            dto.getMedico().setMedicoEspecialidades(mespDTO);
+        }
+        jsonFormatado(dto);
+        return dto;
+    }
+
+    @Override
     public FuncionarioDTO findById(Long id) {
         return repository.findById(id)
                 .map(this::to)
@@ -62,7 +99,6 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
 
         dto.setId(id);
         to(dto, obj);
-//        atualizarEspecialidades(dto, Funcionario);
 
         return to(obj);
     }
@@ -98,6 +134,12 @@ public class FuncionarioServiceImpl extends AbstractServiceImpl implements Funci
     public FuncionarioDTO findUsuarioByFuncionarioId(Long id) {
         return repository.findUsuarioByFuncionarioId(id).map(this::funcionarioWithUser)
                 .orElseThrow(() -> new ObjectNotFoundException("Esse funcionário não tem um usuário cadastrado."));
+    }
+
+    @Override
+    public FuncionarioDTO buscarEspecialidadeByMedico(Long id) {
+        Funcionario funcionario = repository.buscarEspecialidadeByMedico(id).orElse(new Funcionario());
+        return to(funcionario);
     }
 
     private FuncionarioDTO funcionarioWithUser(Funcionario obj) {

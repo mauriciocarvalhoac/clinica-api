@@ -23,7 +23,6 @@ public class JwtOncePerRequestFilterImpl extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("Todas as requisições passam por essa filtrgem (JwtOncePerRequestFilterImpl)");
         String authorization = request.getHeader("Authorization");
         if (authorization != null) {
             String token = authorization.replace("Bearer ", "");

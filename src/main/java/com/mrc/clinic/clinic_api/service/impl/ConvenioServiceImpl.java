@@ -38,7 +38,7 @@ public class ConvenioServiceImpl extends AbstractServiceImpl implements Convenio
 
     @Override
     public List<ConvenioDTO> listAll() {
-        return repository.listAll().stream().map(this::to).toList();
+        return repository.findAll().stream().map(this::to).toList();
     }
 
     @Override

@@ -19,7 +19,7 @@ public class Departamento extends AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "descricao", length = 100, nullable = false)
+    @Column(name = "descricao", length = 50, nullable = false)
     private String descricao;
 
     @Enumerated(value = EnumType.STRING)

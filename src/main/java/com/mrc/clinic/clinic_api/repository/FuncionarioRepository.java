@@ -1,5 +1,6 @@
 package com.mrc.clinic.clinic_api.repository;
 
+import com.mrc.clinic.clinic_api.entity.EnumCargo;
 import com.mrc.clinic.clinic_api.entity.Funcionario;
 import com.mrc.clinic.clinic_api.entity.rec.FuncionarioRec;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,9 +18,6 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
     @Query("SELECT f FROM Funcionario f")
     List<Funcionario> listAll();
 
-//    @Query("SELECT m FROM Funcionario m LEFT JOIN FETCH m.funcionarioEspecialidades me LEFT JOIN FETCH me.especialidade e  WHERE m.id = :id")
-//    Optional<Funcionario> findFuncionarioById(Long id);
-
     @Query("select new com.mrc.clinic.clinic_api.entity.rec.FuncionarioRec(f.id, f.nome, f.cpf, f.email, f.funcao) from Funcionario f")
     List<FuncionarioRec> list();
 
@@ -28,7 +26,23 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
     @Query("SELECT f FROM Funcionario f LEFT JOIN FETCH f.usuario u WHERE f.id = :id")
     Optional<Funcionario> findUsuarioByFuncionarioId(@Param("id") Long id);
 
-    @Query("select f from Funcionario f left join fetch f.medico m left join m.medicoEspecialidades me left join me.especialidade e where f.id = :id")
+    @Query("select f from Funcionario f " +
+            "left join fetch f.medico m " +
+            "left join m.medicoEspecialidades me " +
+            "left join me.especialidade e " +
+            "where f.id = :id")
     Optional<Funcionario> findMedicoById(@Param("id") Long id);
 
+    @Query("select f from Funcionario f " +
+            "left join fetch f.medico m " +
+            "inner join m.medicoEspecialidades me " +
+            "left join me.especialidade e ")
+    List<Funcionario> listMedicosAndEspecialidades(EnumCargo enumCargo);
+
+    @Query("select f from Funcionario f " +
+            "left join fetch f.medico m " +
+            "left join fetch m.medicoEspecialidades me " +
+//            "left join fetch me.especialidade e " +
+            "where f.id = :id")
+    Optional<Funcionario> buscarEspecialidadeByMedico(@Param("id") Long id);
 }

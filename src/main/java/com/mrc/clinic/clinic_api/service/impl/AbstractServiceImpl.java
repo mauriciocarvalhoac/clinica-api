@@ -2,10 +2,160 @@ package com.mrc.clinic.clinic_api.service.impl;
 
 import com.mrc.clinic.clinic_api.entity.*;
 import com.mrc.clinic.clinic_api.entity.dto.*;
+import com.mrc.clinic.clinic_api.entity.rec.AgendaRec;
 import com.mrc.clinic.clinic_api.entity.rec.FuncionarioRec;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import tools.jackson.databind.ObjectMapper;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AbstractServiceImpl {
+    @Autowired
+    private ObjectMapper objectMapper; // O Spring já fornece essa instância automaticamente
+
+    public void to(AgendaDTO dto, Agenda agenda, HashSet convenios) {
+        BeanUtils.copyProperties(dto, agenda);
+
+        Funcionario funcionario = new Funcionario();
+        BeanUtils.copyProperties(dto.getFuncionario(), funcionario);
+        agenda.setFuncionario(funcionario);
+
+        Especialidade especialidade = new Especialidade();
+        BeanUtils.copyProperties(dto.getEspecialidade(), especialidade);
+        agenda.setEspecialidade(especialidade);
+
+
+        if (agenda.getAtendimentos() == null) {
+            agenda.setAtendimentos(new ArrayList<>());
+        } else {
+            agenda.getAtendimentos().clear();
+        }
+        if (dto.getAtendimentos() != null)
+            for (AtendimentoDTO atendimentoDTO : dto.getAtendimentos()) {
+                Atendimento atendimento = new Atendimento();
+                BeanUtils.copyProperties(atendimentoDTO, atendimento);
+                atendimento.setAgenda(agenda);
+                agenda.getAtendimentos().add(atendimento);
+            }
+
+        if (agenda.getConvenios() == null) {
+            agenda.setConvenios(new HashSet<>());
+        } else {
+            agenda.getConvenios().clear();
+        }
+        if (convenios != null) {
+            agenda.getConvenios().addAll(convenios);
+        }
+
+    }
+
+    public AgendaDTO to(AgendaRec rec) {
+        AgendaDTO dto = new AgendaDTO();
+        dto.setId(rec.id());
+        dto.setDescricao(rec.descricao());
+
+        dto.setFuncionario(new FuncionarioDTO());
+        dto.getFuncionario().setNome(rec.nome());
+
+        dto.setAtendimentos(new ArrayList<>());
+        for (Atendimento atendimento : rec.atendimentos()) {
+            AtendimentoDTO atendimentoDTO = new AtendimentoDTO();
+            atendimentoDTO.setDia(atendimento.getDia());
+            dto.getAtendimentos().add(atendimentoDTO);
+        }
+        return dto;
+    }
+
+    public Agenda to(AgendaDTO dto) {
+        Agenda agenda = new Agenda();
+        BeanUtils.copyProperties(dto, agenda);
+
+        Funcionario funcionario = new Funcionario();
+        BeanUtils.copyProperties(dto.getFuncionario(), funcionario);
+        agenda.setFuncionario(funcionario);
+
+        Especialidade especialidade = new Especialidade();
+        BeanUtils.copyProperties(dto.getEspecialidade(), especialidade);
+        agenda.setEspecialidade(especialidade);
+
+        if (agenda.getAtendimentos() == null) {
+            agenda.setAtendimentos(new ArrayList<>());
+        }
+
+        for (AtendimentoDTO atendimentoDTO : dto.getAtendimentos()) {
+            Atendimento atendimento = new Atendimento();
+            BeanUtils.copyProperties(atendimentoDTO, atendimento);
+            atendimento.setAgenda(agenda);
+            agenda.getAtendimentos().add(atendimento);
+        }
+        return agenda;
+    }
+
+    public AgendaDTO toListAll(Agenda obj) {
+        AgendaDTO agendaDTO = new AgendaDTO();
+        agendaDTO.setId(obj.getId());
+        agendaDTO.setDescricao(obj.getDescricao());
+        agendaDTO.setDuracao(obj.getDuracao());
+
+        FuncionarioDTO funcinarioDTO = new FuncionarioDTO();
+        funcinarioDTO.setNome(obj.getFuncionario().getNome());
+        agendaDTO.setFuncionario(funcinarioDTO);
+
+        if (agendaDTO.getAtendimentos() == null) {
+            agendaDTO.setAtendimentos(new ArrayList<>());
+        }
+        agendaDTO.getAtendimentos().clear();
+
+        Set<AtendimentoDTO> listaSet = new HashSet<>();
+        obj.getAtendimentos().forEach(atendimento -> {
+            AtendimentoDTO atendimentoDTO = new AtendimentoDTO();
+            atendimentoDTO.setDia(atendimento.getDia());
+            listaSet.add(atendimentoDTO);
+        });
+
+        agendaDTO.getAtendimentos().addAll(listaSet);
+
+        return agendaDTO;
+    }
+
+    public AgendaDTO to(Agenda obj) {
+        AgendaDTO agendaDTO = new AgendaDTO();
+        BeanUtils.copyProperties(obj, agendaDTO);
+
+        FuncionarioDTO funcinarioDTO = new FuncionarioDTO();
+        BeanUtils.copyProperties(obj.getFuncionario(), funcinarioDTO);
+        agendaDTO.setFuncionario(funcinarioDTO);
+
+        EspecialidadeDTO especialidadeDTO = new EspecialidadeDTO();
+        BeanUtils.copyProperties(obj.getEspecialidade(), especialidadeDTO);
+        agendaDTO.setEspecialidade(especialidadeDTO);
+
+        if (agendaDTO.getAtendimentos() == null) {
+            agendaDTO.setAtendimentos(new ArrayList<>());
+        }
+
+        obj.getAtendimentos().forEach(atendimento -> {
+            AtendimentoDTO atendimentoDTO = new AtendimentoDTO();
+            BeanUtils.copyProperties(atendimento, atendimentoDTO);
+
+            agendaDTO.getAtendimentos().add(atendimentoDTO);
+        });
+        if (agendaDTO.getConvenios() == null) {
+            agendaDTO.setConvenios(new HashSet<>());
+        }
+        if (obj.getConvenios() != null && !obj.getConvenios().isEmpty()) {
+            for (Convenio c : obj.getConvenios()) {
+                ConvenioDTO convenioDTO = new ConvenioDTO();
+                BeanUtils.copyProperties(c, convenioDTO);
+                agendaDTO.getConvenios().add(convenioDTO);
+            }
+        }
+
+        return agendaDTO;
+    }
 
     public Especialidade to(EspecialidadeDTO dto) {
         Especialidade obj = new Especialidade();
@@ -152,5 +302,9 @@ public class AbstractServiceImpl {
 
     public void to(DepartamentoDTO dto, Departamento obj) {
         BeanUtils.copyProperties(dto, obj);
+    }
+
+    public void jsonFormatado(Object dto) {
+        System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dto));
     }
 }

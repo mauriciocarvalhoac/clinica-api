@@ -27,11 +27,16 @@ public class FuncionarioController {
         return ResponseEntity.ok(service.listAll());
     }
 
+    @GetMapping("/medicos")
+    public ResponseEntity<List<FuncionarioDTO>> listAllMedicos() {
+        return ResponseEntity.ok(service.listMedicos());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<FuncionarioDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
-  
+
     @GetMapping("/{id}/usuario")
     public ResponseEntity<FuncionarioDTO> findUsuarioByFuncionarioId(@PathVariable Long id) {
         return ResponseEntity.ok(service.findUsuarioByFuncionarioId(id));
@@ -52,5 +57,10 @@ public class FuncionarioController {
         return ResponseEntity.ok(service.filterBy(nome, cpf));
     }
 
+    @GetMapping("/{id}/especialidades")
+    public ResponseEntity<FuncionarioDTO> buscarEspecialidadeByMedico(@PathVariable Long id) {
+        FuncionarioDTO funcionarioDTO = service.buscarEspecialidadeByMedico(id);
+        return ResponseEntity.ok(funcionarioDTO);
+    }
 }
 

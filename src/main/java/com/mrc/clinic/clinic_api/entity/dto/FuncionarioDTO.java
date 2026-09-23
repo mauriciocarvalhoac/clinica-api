@@ -1,6 +1,7 @@
 package com.mrc.clinic.clinic_api.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mrc.clinic.clinic_api.entity.EnumCargo;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
@@ -59,6 +60,7 @@ public class FuncionarioDTO {
     private LocalDate dataAdmissao;
 
     @Embedded
+    @JsonIgnore
     private EnderecoDTO endereco = new EnderecoDTO();
     private UsuarioDTO usuario;
     private MedicoDTO medico;

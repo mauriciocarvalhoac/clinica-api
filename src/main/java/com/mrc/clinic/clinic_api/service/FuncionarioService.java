@@ -9,6 +9,8 @@ public interface FuncionarioService {
 
     List<FuncionarioDTO> listAll();
 
+    List<FuncionarioDTO> listMedicos();
+
     FuncionarioDTO findById(Long id);
 
     FuncionarioDTO update(Long id, FuncionarioDTO dto);
@@ -18,4 +20,6 @@ public interface FuncionarioService {
     List<FuncionarioDTO> filterBy(String nome, String cpf);
 
     FuncionarioDTO findUsuarioByFuncionarioId(Long id);
+
+    FuncionarioDTO buscarEspecialidadeByMedico(Long id);
 }
